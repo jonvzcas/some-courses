@@ -1,0 +1,218 @@
+# Contenido
+
+1. [ARCHIVOS](#archivos)
+   - Listamiento de archivos y carpetas
+   - Combinaciones y variaciones
+   - Mostrar donde estoy parado
+   - Ordenar archivos
+1. [ACCESO ADMINISTRATIVO](#acceso-administrativo)
+   - Especificar el inicio de sesión en la shell como root
+   - SUDO
+
+# ARCHIVOS {#archivos}
+
+## Listamiento de archivos y carpetas
+
+> **ls -l** _lista archivos y muestra atributos_
+
+> **ls -r** _lista los archivos en orden Z A_
+
+> **ls -l** _Documents lista directamente el contenido de una carpeta_
+
+## Combinaciones y variaciones
+
+> **ls -l -r**
+
+> **ls -rl**
+
+> **ls -lr**
+
+## Mostrar donde estoy parado
+
+> **pwd** _muestra donde estoy parado_
+
+> **cd ..** _retroceder un directorio_
+
+> **cd ~** _directorio principal del usuario_
+
+## Ordenar archivos
+
+> **ls -l -t /ruta-directorio** _ordena archivos por sello de tiempo_
+
+> **ls -l -S /ruta-directorio** _ordena archivos por tamaño_
+
+> **ls -lSr /ruta-directorio** _invierte el orden de cualquier tipo de ordenación_
+
+> **ls -r /ruta-directorio** _invierte los archivos por orden alfabético_
+
+# 2. ACCESO ADMINISTRATIVO {#acceso-administrativo}
+
+<!-- La contraseña de práctica es: netlab123 -->
+
+## Especificar el inicio de sesión en la shell como root
+
+> **su -** _inicia sesión como root_
+
+> **su -l** _inicia sesión como root_
+
+> **su --login** _inicia sesión como root_
+
+> **logout** _cierra sesion como root_
+
+> **exit** _vover al usuario previo al root_
+
+## SUDO
+
+Permite ejecutar comandos como otro usuario sin tener que crear un nuevo shell
+sudo -u también se utiliza para cambiar a otras cuentas de usuario.
+
+**_Ejemplo:_**
+
+> **sudo sl** _muestra la locomotora en la CLI_
+
+# 3. PERMISOS DE LOS ARCHIVOS
+
+**Método simbólico**
+
+`chmod [<CONJUNTO DE PERMISOS><ACCIÓN><PERMISOS>]... ARCHIVO`
+
+## CONJUNTO DE PERMISOS
+
+- u Usuario propietario del archivo
+- g Grupo propietario del archivo
+- o Otros
+- a Todos
+
+// ACCION
+
+- añadir permiso, si es necesario
+  = especificar el permiso exacto
+
+* eliminar el permiso, si es necesario
+
+// PERMISOS
+r leer (read)
+w escribir (write)
+x ejecutar (execute)
+
+// ... ARCHIVO
+ruta y nombre para los archivos a los que se quiere asignar los permisos
+
+// TEMA APARTE NO TAN APARTE
+./ Esto indica que el “comando” debe ejecutarse desde el directorio actual
+./hello.sh ejecutar un script (ejemplo)
+
+chmod u+x hello.sh ejemplo: dando permiso de ejecución al usuario actual
+
+// Cambiar el propietario de un archivo
+Puede ser realizo por el usuario root o el propietario del archivo
+
+// Cambiar el propietario de un archivo
+
+chown cambia el propietario de los archivos y directorios
+
+SINTAXIS de chown chown [PROPIETARIO] ARCHIVO
+el primer argumento especifica al usuario que debe ser el nuevo propietario del archivo
+el segundo argumento especifica a cual archivo se esta cambiando de propietario
+ejemplo: sudo chown root hello.sh
+
+// - - - - - VISUALIZACIÓN DE ARCHIVOS - - - - -
+
+cat permite ver el contenido de archivos pequeños
+
+SINTAXIS de cat cat [ARCHIVO]
+ejemplo: cat animals.txt
+
+head [ARCHIVO] permite visualizar las primeras lineas de un archivo
+head -n 3 [ARCHIVO] especifica la cantidad de lineas a mostrar
+
+tail [ARCHIVO] permite visualizar las últimas lineas de un archivo
+tail -n 3 [ARCHIVO] especifica la cantidad de lineas a mostrar
+
+// - - - - - COPIAR ARCHIVOS - - - - -
+
+cp [OPCIONES] ORIGEN DESTINO copiar archivos
+ejemplo (copiando un archivo al directorio actual(.):
+cp /etc/passwd .
+
+A tener en cuenta: Los permisos pueden afectar a los comandos de administración de archivos,
+como el comando cp. Para copiar un archivo, es necesario tener permiso de
+ejecución para acceder al directorio donde se encuentra el archivo y permiso
+de lectura para el archivo que se está copiando.
+
+// - - - - - CLONAR UN DISCO - - - - -
+
+dd El comando dd se utiliza para copiar archivos o particiones enteras al nivel de bits.
+Se puede usar para copiar datos no procesados (raw) a dispositivos extraíbles como dispositivos USB o CD ROMS.
+dd if=/dev/sda of=/dev/sdb clonar de un disco duro (/dev/sda) a otro (/dev/sdb)
+
+// - - - - - MOVER ARCHIVOS - - - - -
+
+mv ORIGEN DESTINO ejemplo (moviendo un archivo a un directorio conservando su nombre)
+mv people.csv Work
+mv numbers.txt letters.txt alpha.txt School moviendo varios archivos a un directorio. El último argumento es el destino
+mv animals.txt zoo.txt si se mueve dentro del mismo directorio es una forma de cambiarle de nombre
+
+A tener en cuenta: Los permisos pueden afectar comandos de administración de archivos, incluyendo el comando mv. Mover un
+archivo requiere tener permisos de escritura y ejecución tanto en los directorios de origen como de destino.
+
+// - - - - - ELIMINAR ARCHIVOS - - - - -
+
+rm [OPCIONES] ARCHIVO sin ninguna opción el comando se utiliza para eliminar archivos ordinarios. Ejemplo: rm linux.txt
+rm -r o -R DIRECTORIO elimina de forma recursiva a todos los subdirectorios y archivos contenidos en el DIRECTORIO
+
+A tener en cuenta: Los permisos pueden afectar a los comandos de administración de archivos, como el comando rm.
+Para eliminar un archivo dentro de un directorio, el usuario debe tener permiso de escritura y ejecución en
+ese directorio. Normalmente, los usuarios ordinarios solo tienen este tipo de permiso en su directorio principal
+y subdirectorios correspondientes.
+// - - - - - FILTRADO DE ENTRADAS - - - - -
+
+grep El comando grep es un filtro de texto que busca líneas en una entrada y devolverá aquellas que coincidan con un patrón determinado.
+grep [OPCIONES] PATRÓN [ARCHIVO] ejemplo: grep sysadmin passwd
+
+// Expresiones regulares
+(caracteres de anclaje) Son una de las formas con que se pueden utilizar expresiones regulares para limitar los resultados de una búsqueda.
+Por ejemplo el patrón root aparece muchas veces en el archivo /etc/passwd
+
+grep 'root' passwd el patrón se escribe en comillas solidas para evitar que el shell malinterprete como caracteres especiales
+
+Primer caracter de anclaje ^ se utiliza para indicar que el patrón debe de aparecer al principio de la linea
+ejemplo:grep '^root' /etc/passwd output root:x:0:0:root:/root:/bin/bash
+
+caracter de anclaje $ se utiliza para indicar que el patrón debe aparecer al final de la linea.
+ejemplo: encontrar las lineas que terminan en r en el archivo alpha-first.txt
+grep 'r$' alpha-first.txt output B is for Bear  
+ F is for Flower
+
+caracter .(punto) Representa cualquier carácter excepto el carácter de nueva línea.
+ejemplo: grep r..f red.txt output reed
+read
+grep r...f red.txt output reeed
+grep '....' red.txt output encuentra cat todas las palabras de al menos cuatro caracteres
+[0-9] encuentra todas las líneas en el archivo profile.txt que contienen un número,
+utilice el patrón [0123456789] o [0-9]
+ejemplo: grep [0-9] profile.txt output I am 37 years old.
+3121991
+I have 2 dogs.
+123456789101112
+
+[^0-9] encuentra líneas con caracteres no numéricos
+
+[.] solo las líneas que contienen el carácter . se mostraran en el resultado
+Cuando otros caracteres de expresión regular se colocan dentro de corchetes, se tratan como caracteres
+literales. Por ejemplo, el carácter . normalmente indica cualquier carácter. Pero si se coloca dentro de corchetes
+simplemente se referirá al carácter . (punto). En el siguiente ejemplo, sólo las líneas que contienen el carácter . se mostrarán en el resultado.
+Ejemplo: grep '[.]' profile.txt
+
+Indicar un carácter o
+patrón repetido utilizando el _ El carácter de expresión regular _ se utiliza para indicar la ausencia o la presencia una o más veces del carácter o patrón que lo precede.
+ejemplo: grep 're\*d' red.txt output red  
+ reeed  
+ rd  
+ reed
+
+    					También es posible indicar la ausencia o presencia una o más veces de una lista de caracteres utilizando los corchetes.
+    					ejemplo: grep 'r[oe]*f' red.txt		output 	reef
+    											roof
+
+// SEGUIR EN 14.2 Cuando se usa con un solo carácter, \* no resulta muy útil.
