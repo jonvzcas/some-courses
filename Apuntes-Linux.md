@@ -1,65 +1,71 @@
 # Contenido
 
 1. [ARCHIVOS](#archivos)
-   - Listamiento de archivos y carpetas
-   - Combinaciones y variaciones
-   - Mostrar donde estoy parado
-   - Ordenar archivos
+   - [Listamiento de archivos y carpetas](#listamiento-de-archivos-y-carpetas)
+   - [Combinaciones y variaciones](#combinaciones-y-variaciones)
+   - [Mostrar donde estoy parado](#combinaciones-y-variaciones)
+   - [Ordenar archivos](#ordenar-archivos)
 1. [ACCESO ADMINISTRATIVO](#acceso-administrativo)
-   - Especificar el inicio de sesión en la shell como root
-   - SUDO
+   - [Especificar el inicio de sesión en la shell como root](#especificar-el-inicio-de-sesión-en-la-shell-como-root)
+   - [SUDO](#sudo)
+1. [PERMISOS DE LOS ARCHIVOS](#permisos-de-los-archivos)
+   - [Conjunto de Permisos](#conjunto-de-permisos)
+   - [Acción](#acción)
+   - [Permisos](#permisos)
+   - [TEMA APARTE, NO TAN APARTE](#tema-aparte-no-tan-aparte)
+   - [Cambiar el propietario de un archivo](#cambiar-el-propietario-de-un-archivo)
 
-# ARCHIVOS {#archivos}
+# ARCHIVOS
 
 ## Listamiento de archivos y carpetas
 
-> **ls -l** _lista archivos y muestra atributos_
+> `ls -l` _lista archivos y muestra atributos_
 
-> **ls -r** _lista los archivos en orden Z A_
+> `ls -r` _lista los archivos en orden Z A_
 
-> **ls -l** _Documents lista directamente el contenido de una carpeta_
+> `ls -l` _Documents lista directamente el contenido de una carpeta_
 
 ## Combinaciones y variaciones
 
-> **ls -l -r**
+> `ls -l -r`
 
-> **ls -rl**
+> `ls -rl`
 
-> **ls -lr**
+> `ls -lr`
 
 ## Mostrar donde estoy parado
 
-> **pwd** _muestra donde estoy parado_
+> `pwd` _muestra donde estoy parado_
 
-> **cd ..** _retroceder un directorio_
+> `cd ..` _retroceder un directorio_
 
-> **cd ~** _directorio principal del usuario_
+> `cd ~` _directorio principal del usuario_
 
 ## Ordenar archivos
 
-> **ls -l -t /ruta-directorio** _ordena archivos por sello de tiempo_
+> `ls -l -t /ruta-directorio` _ordena archivos por sello de tiempo_
 
-> **ls -l -S /ruta-directorio** _ordena archivos por tamaño_
+> `ls -l -S /ruta-directorio` _ordena archivos por tamaño_
 
-> **ls -lSr /ruta-directorio** _invierte el orden de cualquier tipo de ordenación_
+> `ls -lSr /ruta-directorio` _invierte el orden de cualquier tipo de ordenación_
 
-> **ls -r /ruta-directorio** _invierte los archivos por orden alfabético_
+> `ls -r /ruta-directorio` _invierte los archivos por orden alfabético_
 
-# 2. ACCESO ADMINISTRATIVO {#acceso-administrativo}
+# ACCESO ADMINISTRATIVO
 
 <!-- La contraseña de práctica es: netlab123 -->
 
 ## Especificar el inicio de sesión en la shell como root
 
-> **su -** _inicia sesión como root_
+> `su -` _inicia sesión como root_
 
-> **su -l** _inicia sesión como root_
+> `su -l` _inicia sesión como root_
 
-> **su --login** _inicia sesión como root_
+> `su --login` _inicia sesión como root_
 
-> **logout** _cierra sesion como root_
+> `logout` _cierra sesion como root_
 
-> **exit** _vover al usuario previo al root_
+> `exit` _vover al usuario previo al root_
 
 ## SUDO
 
@@ -68,53 +74,77 @@ sudo -u también se utiliza para cambiar a otras cuentas de usuario.
 
 **_Ejemplo:_**
 
-> **sudo sl** _muestra la locomotora en la CLI_
+> `sudo sl` _muestra la locomotora en la CLI_
 
-# 3. PERMISOS DE LOS ARCHIVOS
+# PERMISOS DE LOS ARCHIVOS
 
 **Método simbólico**
 
 `chmod [<CONJUNTO DE PERMISOS><ACCIÓN><PERMISOS>]... ARCHIVO`
 
-## CONJUNTO DE PERMISOS
+## Conjunto de Permisos
 
-- u Usuario propietario del archivo
-- g Grupo propietario del archivo
-- o Otros
-- a Todos
+> `u` _Usuario propietario del archivo_
+>
+> `g` _Grupo propietario del archivo_
+>
+> `o` _Otros_
+>
+> `a` _Todos_
 
-// ACCION
+## Acción
 
-- añadir permiso, si es necesario
-  = especificar el permiso exacto
+> `-` _añadir permiso, si es necesario_
+>
+> `=` _especificar el permiso exacto_
+>
+> `*` _eliminar el permiso, si es necesario_
 
-* eliminar el permiso, si es necesario
+## Permisos
 
-// PERMISOS
-r leer (read)
-w escribir (write)
-x ejecutar (execute)
+> `r` _leer (read)_
+>
+> `w` _escribir (write)_
+>
+> `x` _ejecutar (execute)_
 
-// ... ARCHIVO
-ruta y nombre para los archivos a los que se quiere asignar los permisos
+## ... ARCHIVO
 
-// TEMA APARTE NO TAN APARTE
-./ Esto indica que el “comando” debe ejecutarse desde el directorio actual
-./hello.sh ejecutar un script (ejemplo)
+Ruta y nombre para los archivos a los que se quiere asignar los permisos.
 
-chmod u+x hello.sh ejemplo: dando permiso de ejecución al usuario actual
+<hr>
 
-// Cambiar el propietario de un archivo
-Puede ser realizo por el usuario root o el propietario del archivo
+### **_TEMA APARTE, NO TAN APARTE_**
 
-// Cambiar el propietario de un archivo
+> `./` Esto indica que el “comando” debe ejecutarse desde el directorio actual
+>
+> `./hello.sh` _ejecutar un script (ejemplo)_
 
-chown cambia el propietario de los archivos y directorios
+<hr>
 
-SINTAXIS de chown chown [PROPIETARIO] ARCHIVO
-el primer argumento especifica al usuario que debe ser el nuevo propietario del archivo
-el segundo argumento especifica a cual archivo se esta cambiando de propietario
-ejemplo: sudo chown root hello.sh
+**_Ejemplo:_**
+
+Dando permiso de ejecución al usuario actual
+
+`chmod u+x hello.sh`
+
+## Cambiar el propietario de un archivo
+
+Puede ser realizado por el usuario root o el propietario del archivo.
+
+> `chown` _cambia el propietario de los archivos y directorios_
+
+**SINTAXIS de chown**
+
+`chown [PROPIETARIO] ARCHIVO`
+
+El primer argumento especifica al usuario que debe ser el nuevo propietario del archivo.
+
+El segundo argumento especifica a cual archivo se esta cambiando de propietario.
+
+**_Ejemplo:_**
+
+`sudo chown root hello.sh`
 
 // - - - - - VISUALIZACIÓN DE ARCHIVOS - - - - -
 
