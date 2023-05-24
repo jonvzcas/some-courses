@@ -14,6 +14,18 @@
    - [Permisos](#permisos)
    - [TEMA APARTE, NO TAN APARTE](#tema-aparte-no-tan-aparte)
    - [Cambiar el propietario de un archivo](#cambiar-el-propietario-de-un-archivo)
+1. [VISUALIZACIÓN DE ARCHIVOS](#visualización-de-archivos)
+   - [cat](#cat)
+   - [head](#head)
+   - [tail](#tail)
+1. [COPIAR ARCHIVOS](#copiar-archivos)
+1. [CLONAR UN DISCO](#clonar-un-disco)
+1. [MOVER ARCHIVOS](#mover-archivos)
+   - [Forma de cambiar el nombre a un archivo](#forma-de-cambiar-el-nombre-a-un-archivo)
+
+[☝️](#contenido)
+
+<hr>
 
 # ARCHIVOS
 
@@ -51,6 +63,10 @@
 
 > `ls -r /ruta-directorio` _invierte los archivos por orden alfabético_
 
+[☝️](#contenido)
+
+<hr>
+
 # ACCESO ADMINISTRATIVO
 
 <!-- La contraseña de práctica es: netlab123 -->
@@ -75,6 +91,10 @@ sudo -u también se utiliza para cambiar a otras cuentas de usuario.
 **_Ejemplo:_**
 
 > `sudo sl` _muestra la locomotora en la CLI_
+
+[☝️](#contenido)
+
+<hr>
 
 # PERMISOS DE LOS ARCHIVOS
 
@@ -146,46 +166,99 @@ El segundo argumento especifica a cual archivo se esta cambiando de propietario.
 
 `sudo chown root hello.sh`
 
-// - - - - - VISUALIZACIÓN DE ARCHIVOS - - - - -
+[☝️](#contenido)
 
-cat permite ver el contenido de archivos pequeños
+<hr>
 
-SINTAXIS de cat cat [ARCHIVO]
-ejemplo: cat animals.txt
+# VISUALIZACIÓN DE ARCHIVOS
 
-head [ARCHIVO] permite visualizar las primeras lineas de un archivo
-head -n 3 [ARCHIVO] especifica la cantidad de lineas a mostrar
+## cat
 
-tail [ARCHIVO] permite visualizar las últimas lineas de un archivo
-tail -n 3 [ARCHIVO] especifica la cantidad de lineas a mostrar
+> `cat` _Permite ver el contenido de archivos pequeños_
 
-// - - - - - COPIAR ARCHIVOS - - - - -
+SINTAXIS de cat:
 
-cp [OPCIONES] ORIGEN DESTINO copiar archivos
-ejemplo (copiando un archivo al directorio actual(.):
-cp /etc/passwd .
+> `cat [ARCHIVO]`
 
-A tener en cuenta: Los permisos pueden afectar a los comandos de administración de archivos,
-como el comando cp. Para copiar un archivo, es necesario tener permiso de
-ejecución para acceder al directorio donde se encuentra el archivo y permiso
-de lectura para el archivo que se está copiando.
+**_Ejemplo:_**
 
-// - - - - - CLONAR UN DISCO - - - - -
+> `cat animals.txt`
 
-dd El comando dd se utiliza para copiar archivos o particiones enteras al nivel de bits.
-Se puede usar para copiar datos no procesados (raw) a dispositivos extraíbles como dispositivos USB o CD ROMS.
-dd if=/dev/sda of=/dev/sdb clonar de un disco duro (/dev/sda) a otro (/dev/sdb)
+## head
 
-// - - - - - MOVER ARCHIVOS - - - - -
+> `head [ARCHIVO]` _Permite visualizar las primeras lineas_ de un archivo
 
-mv ORIGEN DESTINO ejemplo (moviendo un archivo a un directorio conservando su nombre)
-mv people.csv Work
-mv numbers.txt letters.txt alpha.txt School moviendo varios archivos a un directorio. El último argumento es el destino
-mv animals.txt zoo.txt si se mueve dentro del mismo directorio es una forma de cambiarle de nombre
+> `head -n 3 [ARCHIVO]` _Especifica la cantidad de lineas a mostrar_
 
-A tener en cuenta: Los permisos pueden afectar comandos de administración de archivos, incluyendo el comando mv. Mover un
-archivo requiere tener permisos de escritura y ejecución tanto en los directorios de origen como de destino.
+## tail
 
+> `tail [ARCHIVO]` _Permite visualizar las últimas lineas de un archivo_
+
+> `tail -n 3 [ARCHIVO]` _Especifica la cantidad de lineas a mostrar_
+
+[☝️](#contenido)
+
+<hr>
+
+# COPIAR ARCHIVOS
+
+> `cp [OPCIONES] ORIGEN DESTINO` _copiar archivos_
+
+**_Ejemplo:_**
+
+`(.)` El punto significa el directorio actual. En este ejemplo se esta copiando un archivo al directorio actual:
+
+> `cp /etc/passwd .`
+
+> [!NOTE]
+>
+> A tener en cuenta: Los permisos pueden afectar a los comandos de administración de archivos, como el comando `cp`. Para copiar un archivo, es necesario tener permiso de ejecución para acceder al directorio donde se encuentra el archivo y permiso de lectura para el archivo que se está copiando.
+
+[☝️](#contenido)
+
+<hr>
+
+# CLONAR UN DISCO
+
+> `dd` El comando dd se utiliza para copiar archivos o particiones enteras al nivel de bits.
+>
+> Se puede usar para copiar datos no procesados (raw) a dispositivos extraíbles como dispositivos USB o CD ROMS.
+>
+> `dd if=/dev/sda of=/dev/sdb` clonar de un disco duro **(/dev/sda)** a otro **(/dev/sdb)**
+>
+> | Comando                    | Disco Origen | Disco Destino |
+> | -------------------------- | ------------ | ------------- |
+> | dd if=/dev/sda of=/dev/sdb | /dev/sda     | /dev/sdb      |
+
+[☝️](#contenido)
+
+<hr>
+
+# MOVER ARCHIVOS
+
+> `mv ORIGEN DESTINO`
+
+**_Ejemplo:_**
+
+> `mv people.csv Work` Moviendo un archivo a un directorio conservando su nombre
+
+**_Ejemplo:_** Moviendo varios archivos a un directorio
+
+> `mv Apuntes-Linux.md Apuntes-Networks.md /home/jonvzcas/Documents` _Moviendo varios archivos a un directorio._
+>
+> El último argumento es el destino.
+
+## Forma de cambiar el nombre a un archivo
+
+> `mv animals.txt zoo.txt` _Si se mueve dentro del mismo directorio es una forma de cambiarle de nombre_
+
+> [!NOTE]
+>
+> A tener en cuenta: Los permisos pueden afectar comandos de administración de archivos, incluyendo el comando mv. Mover un archivo requiere tener permisos de escritura y ejecución tanto en los directorios de origen como de destino.
+
+[☝️](#contenido)
+
+<hr>
 // - - - - - ELIMINAR ARCHIVOS - - - - -
 
 rm [OPCIONES] ARCHIVO sin ninguna opción el comando se utiliza para eliminar archivos ordinarios. Ejemplo: rm linux.txt
