@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curso de CSS</title>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      h1 {
+        color: yellowgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <article id="temario-css">
+      <h1 style="color: skyblue">Aprendiendo CSS</h1>
+      <p>
+        <i style="font-weight: bold; color: orangered"
+          >Cascading Style Sheets</i
+        >
+        - Hojas de Estilo de Cascada
+      </p>
+      <h2>Temario del Curso</h2>
+      <ul>
+        <li><a href="index.html#selectores-basicos">Selectores Básicos</a></li>
+        <li>
+          <a href="index.html#selectores-avanzados">Selectores Avanzados</a>
+        </li>
+        <li><a href="index.html#pseudoclases">Pseudo-classes</a></li>
+        <li><a href="index.html#pseudoelementos">Pseudo-Elementos</a></li>
+        <li><a href="index.html#agrupar-selectores">Agrupar Selectores</a></li>
+        <li><a href="index.html#algoritmo-css">Algoritmo CSS</a></li>
+        <li>
+          <a href="index.html#normalizacion"
+            >Reseteo y Normalización de estilos</a
+          >
+        </li>
+        <li>
+          <a href="index.html#prefijos-navegadores"
+            >Prefijos de los Navegadores</a
+          >
+        </li>
+        <li><a href="box-model.html" target="_blank">Modelo de Caja</a></li>
+        <li>
+          <a href="index.html#https://intercambiosvirtuales.org"
+            >Elemento no vistado</a
+          >
+        </li>
+      </ul>
+    </article>
+    <hr />
+    <article id="selectores-basicos">
+      <h2>Selectores Básicos</h2>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni maiores
+        ducimus impedit. Molestias a nisi expedita! Sint quo, atque rerum
+        debitis voluptates provident asperiores facilis? Dignissimos amet natus
+        culpa incidunt?
+      </p>
+      <p id="parrafo-dos">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit illum at
+        cupiditate totam quam perferendis, natus tempora neque labore
+        dignissimos soluta dolore laborum rem harum culpa pariatur numquam est
+        vel.
+      </p>
+      <p class="text-32 bg-skyblue">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sint commodi
+        dicta mollitia beatae fuga soluta nulla aliquam minima obcaecati placeat
+        fugit, qui, quidem ipsa quaerat, eos libero aspernatur harum cupiditate?
+      </p>
+      <p class="text-20 bg-steelblue text-white">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
+        natus minus exercitationem atque esse maxime rerum quis, expedita rem,
+        quae id iure animi eos laudantium blanditiis fugiat placeat facilis.
+        Recusandae!
+      </p>
+      <p class="text-32 bg-steelblue text-white">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium
+        praesentium dignissimos voluptates harum minus repudiandae velit, facere
+        ipsam pariatur a enim corporis. Quo magni ea eveniet. Aperiam possimus
+        earum totam?
+      </p>
+    </article>
+    <p><a href="index.html#temario-css">☝️</a></p>
+    <hr />
+    <article id="selectores-avanzados">
+      <h2>Selectores Avanzados</h2>
+      <h3>Selectores de hijos</h3>
+      <h4>Selector de hijos directos</h4>
+      <p>
+        Solamente aplica a los elementos en el primer nivel. Se aplica el pico
+        parentesis
+      </p>
+      <ul class="hijos-directos">
+        <li><b>Primavera</b></li>
+        <li><b>Verano</b></li>
+        <li><b>Otoño</b></li>
+        <li><b>Invierno</b></li>
+      </ul>
+      <h4>Selector de hijos descendientes</h4>
+      <p>Va a estar representado por un espacio en blanco.</p>
+      <ul class="hijos-descendientes">
+        <li><b>Primavera</b></li>
+        <li><b>Verano</b></li>
+        <li><b>Otoño</b></li>
+        <li><b>Invierno</b></li>
+      </ul>
+      <h3>Selectores de hermanos</h3>
+      <p>
+        Aplica el selector solamente a los elementos que sean hermanos (mismo
+        nivel) y que esten por debajo del elemento de referencia. Se aplica con
+        el caracter ~
+      </p>
+      <h4>Selector de hermanos (en general)</h4>
+      <ul>
+        <li><b>Primavera</b></li>
+        <li class="hermanos-general"><b>Verano</b></li>
+        <li><b>Otoño</b></li>
+        <li><b>Invierno</b></li>
+      </ul>
+      <h4>Selector de hermanos adyacentes</h4>
+      <p>
+        Va a aplicar los estilos al elemento que coincida con la segunda parte
+        del selector y que este inmediatamente debajo del selector de
+        referencia. Se aplica con el simbolo de la suma +
+      </p>
+      <ul>
+        <li><b>Primavera</b></li>
+        <li class="hermanos-adyacentes"><b>Verano</b></li>
+        <li><b>Otoño</b></li>
+        <li><b>Invierno</b></li>
+      </ul>
+      <h3>Selectores de atributo</h3>
+      <p>
+        Se pone entre corchetes el atributo al que se va a hacer referencia.
+      </p>
+      <nav class="selectores-atributos">
+        <ul>
+          <li><a href="https://jonmircha.com" target="_blank">Inicio</a></li>
+          <li>
+            <a
+              class="menu-item cursos button"
+              href="https://jonmircha.com/cursos"
+              target="_blank"
+              >Cursos</a
+            >
+          </li>
+          <li><a href="http://jonmircha.com/blog" target="_blank">Blog</a></li>
+          <li><a href="https://jonmircha.com/cv" target="_blank">CV</a></li>
+          <li>
+            <a
+              class="menu item ahora button"
+              href="https://jonmircha.com/ahora"
+              target="_blank"
+              >Ahora</a
+            >
+          </li>
+          <li>
+            <a href="http://jonmircha.com/notas" target="_blank">Notas</a>
+          </li>
+          <li>
+            <a href="index.html#temario-css">Temario CSS</a>
+          </li>
+        </ul>
+      </nav>
+      <h3>Selector Universal *</h3>
+      <ul class="selector-universal">
+        <li><b>Primavera</b></li>
+        <li><b>Verano</b></li>
+        <li><b>Otoño</b></li>
+        <li><b>Invierno</b></li>
+      </ul>
+      <p><a href="index.html#temario-css">☝️</a></p>
+    </article>
+    <hr />
+    <article id="pseudoclases">
+      <h2>Pseudo-classes</h2>
+      <form class="form-pseudoclases">
+        <input
+          type="text"
+          name="nombre"
+          placeholder="Escribe tu nombre"
+          required
+        />
+        <br />
+        <br />
+        <input
+          type="email"
+          name="email"
+          placeholder="Escribe tu Email"
+          required
+        />
+        <br />
+        <br />
+        <input type="submit" />
+        <br />
+        <br />
+        <input type="submit" disabled />
+      </form>
+      <nav class="menu-pseudoclases">
+        <!-- a[href="seccion$@1"]*4 -->
+        <a href="#seccion1">Sección 1</a>
+        <a href="#seccion2">Sección 2</a>
+        <a href="#seccion3">Sección 3</a>
+        <a href="#seccion4">Sección 4</a>
+      </nav>
+      <p class="p-pseudoclases">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas impedit
+        accusamus esse optio molestiae praesentium odit dolorem iste nam porro
+        aliquid ab, facilis quia ipsa architecto unde nulla in assumenda?
+      </p>
+      <h3>Pseudo-classes por posición</h3>
+      <hr />
+      <ol class="lista-pseudoclases">
+        <li>Enero</li>
+        <li>Febrero</li>
+        <li>Marzo</li>
+        <li>Abril</li>
+        <li>Mayo</li>
+        <li>Junio</li>
+        <li>Julio</li>
+        <li>Agosto</li>
+        <li>Septiembre</li>
+        <li>Octubre</li>
+        <li>Noviembre</li>
+        <li>Diciembre</li>
+      </ol>
+      <article class="articulo-pseudoclases">
+        <h3>Pseudo-classes por tipo de elemento</h3>
+        <hr />
+        <header>Esto es un header</header>
+        <p>Esto es un p</p>
+        <div>Esto es un div</div>
+        <p>Es es un p</p>
+        <section>Esto es una section</section>
+        <p>Esto es un p</p>
+        <div>Esto es un div</div>
+        <p>Es es un p</p>
+        <footer>Esto es un footer</footer>
+      </article>
+      <p><a href="index.html#temario-css">☝️</a></p>
+    </article>
+    <hr />
+    <article id="pseudoelementos">
+      <h2>Pseudo-Elementos</h2>
+      <p>
+        <i>Computador LENOVO</i><span class="pc-lenovo"> Tipo Servidor</span>
+        <span class="pc-precio"> 2000</span>
+      </p>
+      <p class="p-pseudoelementos">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa modi
+        eius saepe reiciendis iure dolor in quaerat minima ipsam nam nesciunt,
+        earum maxime sapiente optio aliquid, velit, officia veritatis rerum.
+      </p>
+      <input
+        class="input-pseudoelementos"
+        type="text"
+        placeholder="Escribe tu nombre"
+      />
+      <p><a href="index.html#temario-css">☝️</a></p>
+    </article>
+    <hr />
+    <article id="agrupar-selectores">
+      <h2>Agrupar Selectores</h2>
+      <form class="form-agrupar-selectores">
+        <input type="text" name="nombre" placeholder="Escribe tu nombre" />
+
+        <input type="email" name="correo" placeholder="Escribe tu correo" />
+
+        <textarea
+          name="comentarios"
+          placeholder="Escribe tus comentarios"
+          cols="30"
+          rows="10"
+        ></textarea>
+
+        <input type="submit" />
+      </form>
+      <p><a href="index.html#temario-css">☝️</a></p>
+    </article>
+    <hr />
+    <article id="algoritmo-css">
+      <h2>Algoritmo CSS</h2>
+      <ol>
+        <li>La Cáscada</li>
+        <li>La Especificidad</li>
+        <li>La Herencia</li>
+      </ol>
+      <blockquote
+        id="cita-marco"
+        class="cita-marco"
+        style="background-color: rebeccapurple"
+      >
+        Sé tolerante con los demás y estricto contigo mismo -
+        <cite>Marco Aurelio</cite>
+      </blockquote>
+      <p><a href="index.html#temario-css">☝️</a></p>
+    </article>
+    <hr />
+    <article id="normalizacion">
+      <h2>Reseteo y Normalización de estilos</h2>
+      <p>
+        Logra que todos los navegadores redendericen más consistentemente con
+        todos los estándares. Se aplican solo los estilos que necesitan ser
+        normalizados.
+        <a href="https://necolas.github.io/normalize.css/" target="_blank"
+          >Este es el sitio web</a
+        >
+        donde se puede descargar la hoja de estilos actualizada para reseteo y
+        normalización de estilos.
+      </p>
+      <p><a href="index.html#temario-css">☝️</a></p>
+    </article>
+    <hr />
+    <article id="prefijos-navegadores">
+      <h2>Prefijos de los Navegadores</h2>
+      <ul>
+        <li>
+          Navegadores de Microsoft <code><b>-ms-</b></code>
+        </li>
+        <li>
+          Firefox <code><b>-moz-</b></code>
+        </li>
+        <li>
+          Todos los demás navegadores <code><b>-webkit-</b></code>
+        </li>
+      </ul>
+      <h3>Autoprefixer CSS online</h3>
+      <p>
+        Autoprefixer es un PostCSS plugin que adapta el CSS a navegadores a
+        través de prefijos.
+      </p>
+      <a href="https://autoprefixer.github.io/" target="_blank">Clic aquí</a>
+      para ir al código de Autoprefixer CSS online.
+
+      <p>Ejemplo:</p>
+      <pre>
+        /*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+.example {
+    display: -ms-grid;
+    display: grid;
+    -webkit-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    background: -webkit-gradient(linear, left top, left bottom, from(white), to(black));
+    background: -o-linear-gradient(top, white, black);
+    background: linear-gradient(to bottom, white, black);
+}
+      </pre>
+      <p><a href="index.html#temario-css">☝️</a></p>
+    </article>
+    <hr />
+  </body>
+</html>

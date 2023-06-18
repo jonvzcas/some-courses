@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Aprendiendo fundamentos de HTML con @jonmircha"><!-- No más de 165 carácteres-->
+  <title>Aprendiendo HTML</title><!--Entre 55 y 65 carácteres-->
+  <link rel="stylesheet" href="assets/estilos.css">
+  <link rel="canonical" href="http://tudominio.com/la-url-canonica">
+  <link rel="icon" href="img/favicon-circle.png">
+  <link rel="apple-touch-icon" href="img/favicon-circle.png">
+  <meta name="theme-color" content="#ff6600">
+</head>
+
+<body>
+  <h1 id="inicio">Aprende HTML y CSS con Jonathan Mircha</h1>
+  
+  <h2>Tabla de contenido</h2>
+
+  <ol>
+    <li><a href="index.html#etiquetas-formateo">Etiquetas de formateo</a></li>
+    <li><a href="index.html#etiquetas-semanticas">Etiquetas semánticas estructurales</a></li>
+    <li><a href="index.html#scripts-html">Scripts en HTML</a></li>
+    <li><a href="index.html#imagenes">Imagénes</a></li>
+    <li><a href="index.html#figuras">Figuras</a></li>
+    <li><a href="index.html#listas-ordenadas">Listas Ordenadas</a></li>
+    <li><a href="index.html#listas-desordenadas">Listas Desordenadas</a></li>
+    <li><a href="index.html#listas-definicion">Listas de definición</a></li>
+    <li><a href="index.html#tablas">Tablas</a></li>
+    <li><a href="index.html#enlaces">Enlaces</a></li>
+    <li><a href="index.html#elementos-interactivos">Elementos interactivos</a></li>
+    <li><a href="index.html#audio-video">Audio y Video</a></li>
+    <li><a href="index.html#iframes">Iframes</a></li>
+    <li><a href="index.html#formularios">Elementos de Formulario</a></li>
+    <li><a href="index.html#ejemplo-formulario">Ejemplo de formulario</a></li>
+    <li><a href="index.html#data-attributes">Data Attributes</a></li>
+    <li><a href="index.html#meta-etiquetas">Meta Etiquetas</a></li>
+  </ol>
+
+  <h2 id="etiquetas-formateo">Etiquetas de formateo</h2>
+  <p><a href="index.html#final">👇</a></p>
+  <mark>marca de texto</mark>
+  <p>e=emc<sup>2</sup></p>
+  <p>H<sub>2</sub>O</p>
+  <em>Este texto hace enfásis</em>
+  <blockquote>Sirve para insertar frases o citas</blockquote>
+  <hr>
+  <p><a href="index.html#inicio">☝️</a></p>
+
+  <pre>
+    <!--Respeta el espacio y las indentaciones-->
+    Tareas por hacer:
+    - Tender la cama.
+    - Tomar una ducha.
+    - Vestirme.
+    - Irme al trabajo.
+  </pre>
+
+  <!--Permite escribir texto en formato código-->
+  <p>
+  <code>Este texto esta formato de código</code>
+  </p>
+  <hr>
+  <p><a href="index.html#inicio">☝️</a></p>
+
+  <h2 id="etiquetas-semanticas">Etiquetas semánticas estructurales</h2>
+  <div>Etiqueta contenedora que no tiene semántica</div>
+  <hr>
+  <p><a href="index.html#inicio">☝️</a></p>
+
+  <h2 id="scripts-html">Scripts en HTML</h2>
+  <hr>
+  <p><a href="index.html#inicio">☝️</a></p>
+
+  <h2 id="imagenes">Imagénes</h2>
+
+  <img src="https://www.adobe.com/es/express/feature/image/media_16ad2258cac6171d66942b13b8cd4839f0b6be6f3.png?width=750&format=png&optimize=medium" alt="Firulais">
+  <img src="https://www.cleverfiles.com/howto/wp-content/uploads/2018/03/minion.jpg" alt="Minions">
+  <img src="https://cdnb.20m.es/yaestaellistoquetodolosabe/files/2014/12/Un-pu%C3%B1ado-de-curiosos-y-divertidos-GIFs-sobre-la-Navidad-Felices-Fiestas1.gif" alt="Mickey in Chrimas">
+  <img src="img/murcielago.svg" alt="El murcielago">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5 7H19C19.5523 7 20 7.44771 20 8V16C20 16.5523 19.5523 17 19 17H5C4.44772 17 4 16.5523 4 16V8C4 7.44772 4.44772 7 5 7ZM2 8C2 6.34315 3.34315 5 5 5H19C20.6569 5 22 6.34315 22 8V16C22 17.6569 20.6569 19 19 19H5C3.34315 19 2 17.6569 2 16V8ZM10 9L14 12L10 15V9Z" fill="currentColor" /></svg>
+  <img src="img/avatar-batman-comics-svgrepo-com.svg" alt="Batman's Avatar">
+  <hr>
+  <p><a href="index.html#inicio">☝️</a></p>
+
+  <h2 id="figuras">Figuras</h2>
+  <figure>
+    <img src="https://www.adobe.com/es/express/feature/image/media_16ad2258cac6171d66942b13b8cd4839f0b6be6f3.png?width=750&format=png&optimize=medium" alt="Firulais">
+    <figcaption>Es una imagen de ejemplo del sitio web de adobe</figcaption>
+  </figure>
+  <hr>
+  <p><a href="index.html#inicio">☝️</a></p>
+
+  <h2 id="listas-ordenadas">Listas Ordenadas</h2>
+  <p>En este ejemplo por medio del atributo start se inicia la númeración con un número distinto a 1, ejemplo 3.</p>
+  <ol start="3">
+    <li>Introducción</li>
+    <li>Resumen</li>
+    <li>Desarrollo del tema</li>
+    <li>Opiniones</li>
+    <li>Conclusión</li>
+  </ol>
+  
+  <p>El atributo reversed, invierte la numeración en los items.</p>
+  <ol reversed>
+    <li>Introducción</li>
+    <li>Resumen</li>
+    <li>Desarrollo del tema</li>
+    <li>Opiniones</li>
+    <li>Conclusión</li>
+  </ol>
+
+  <ol type="A">
+    <li>Introducción</li>
+    <li>Resumen</li>
+    <li>Desarrollo del tema</li>
+    <li>Opiniones</li>
+    <li>Conclusión</li>
+  </ol>
+
+  <ol type="i">
+    <li>Introducción</li>
+    <li>Resumen</li>
+    <li>Desarrollo del tema</li>
+    <li>Opiniones</li>
+    <li>Conclusión</li>
+  </ol>
+  <hr>
+  <p><a href="index.html#inicio">☝️</a></p>
+
+  <h2 id="listas-desordenadas">Listas Desordenadas</h2>
+  <p>Cosas por hacer</p>
+  <ul type="circle">
+    <li>Lavar los platos</li>
+    <li>Seguir estudiando</li>
+    <li>Practicar lo aprendido</li>
+  </ul>
+
+  <ul type="square">
+    <li>Lavar los platos</li>
+    <li>Seguir estudiando</li>
+    <li>Practicar lo aprendido</li>
+  </ul>
+
+  <ul type="list">
+    <li>Lavar los platos</li>
+    <li>Seguir estudiando</li>
+    <li>Practicar lo aprendido</li>
+  </ul>
+  <hr>
+  <p><a href="index.html#inicio">☝️</a></p>
+  
+  <h2 id="listas-definicion">Listas de definición</h2>
+  <dl>
+    <dt>HTML</dt>
+    <dd>Lenguaje de Enmarcado de Hipertexto.</dd>
+
+    <dt>CSS</dt>
+    <dd>Es un lenguaje de definición que da estilos al código HTML.</dd>
+
+    <dt>JavaScript</dt>
+    <dd>Es el lenguaje de la Web.</dd>
+  </dl>
+
+  <hr>
+  <p><a href="index.html#inicio">☝️</a></p>
+
+  <h2 id="tablas">Tablas</h2>
+  <table>
+    <thead>
+      <th colspan="3">Tabla de los Santos de Athena</th>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Dirección</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Climaco</td>
+        <td>Castillo</td>
+        <td>Calle 3A # 35 - 57</td>
+      </tr>
+      <tr>
+        <td rowspan="2">Oscar</td>
+        <td rowspan="2">Perez</td>
+        <td>Calle 3A # 35 - 57</td>
+      </tr>
+      <tr>
+        <td>Cra 49 # 8 - 33</td>
+      </tr>
+    </tbody>
+    <tfooter>
+      <th colspan="3"><small>Directorio familiar</small></th>
+    </tfooter>
+  </table>
+  <p><a href="index.html#inicio">☝️</a></p>
+  <hr>
+
+  <h2 id="enlaces">Enlaces</h2>
+  <a href="https://intercambiosvirtuales.org" target="_blank" rel="nofollow">Descarga software y demás contenido de calidad</a>
+  <br>
+  <a href="mailto:jonathancastillog@gmail.com">Envianos un mensaje</a>
+  <br>
+  <a href="tel:573173538964">Llámanos</a>
+  <p><a href="index.html#inicio">☝️</a></p>
+  <hr>
+
+  <h2 id="elementos-interactivos">Elementos interactivos</h2>
+  <button onclick="alert('Hola haz cliqueado el botón')">Este es un botón</button>
+  <br>
+  <br>
+  <details>
+    <summary>Título del Acordeón</summary>
+    <article>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem earum animi placeat quibusdam sit veniam enim velit voluptatibus sed reiciendis numquam eum maiores sunt, nulla perspiciatis, sequi deserunt aut quod similique fuga voluptate. Alias, magnam a illo veritatis voluptatibus itaque.</p>
+    <img src="img/avatar-batman-comics-svgrepo-com.svg">
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem earum animi placeat quibusdam sit veniam enim velit voluptatibus sed reiciendis numquam eum maiores sunt, nulla perspiciatis, sequi deserunt aut quod similique fuga voluptate. Alias, magnam a illo veritatis voluptatibus itaque.</p>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem earum animi placeat quibusdam sit veniam enim velit voluptatibus sed reiciendis numquam eum maiores sunt, nulla perspiciatis, sequi deserunt aut quod similique fuga voluptate. Alias, magnam a illo veritatis voluptatibus itaque.</p>
+    </article>
+  </details>
+  <br>
+  <br>
+  <details open>
+    <summary>Título del Acordeón</summary>
+    <article>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem earum animi placeat quibusdam sit veniam enim velit voluptatibus sed reiciendis numquam eum maiores sunt, nulla perspiciatis, sequi deserunt aut quod similique fuga voluptate. Alias, magnam a illo veritatis voluptatibus itaque.</p>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem earum animi placeat quibusdam sit veniam enim velit voluptatibus sed reiciendis numquam eum maiores sunt, nulla perspiciatis, sequi deserunt aut quod similique fuga voluptate. Alias, magnam a illo veritatis voluptatibus itaque.</p>
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem earum animi placeat quibusdam sit veniam enim velit voluptatibus sed reiciendis numquam eum maiores sunt, nulla perspiciatis, sequi deserunt aut quod similique fuga voluptate. Alias, magnam a illo veritatis voluptatibus itaque.</p>
+    </article>
+  </details>
+  <p><a href="index.html#inicio">☝️</a></p>
+  <hr>
+
+  <h2 id="audio-video">Audio y Video</h2>
+  <audio src="media/Raag Bageshree - Sandeep Das, Adhiraj Chaudhuri, Bivakar Chaudhuri.mp3" controls preload></audio>
+  <br>
+  <video src="media/VID-20230410-WA0005.mp4" controls preload poster="img/avatar-batman-comics-svgrepo-com.svg"></video>
+  <p><a href="index.html#inicio">☝️</a></p>
+  <hr>
+
+  <h2 id="iframes">Iframes</h2>
+  <iframe src="hola.html" frameborder="1"></iframe>
+  <br>
+  <iframe src="https://motelsolyluna.net" frameborder="1"></iframe>
+  <br>
+  <iframe src="media/cheatsheet-a5.pdf" frameborder="1"></iframe>
+  <br>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3450.3780252401725!2d-99.16892675266473!3d19.426918521724364!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ff35f5bd1563%3A0x6c366f0e2de02ff7!2sEl%20%C3%81ngel%20de%20la%20Independencia!5e0!3m2!1ses!2sco!4v1683721506410!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  <br>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/ZC4eWrzxIqw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  <p><a href="index.html#inicio">☝️</a></p>
+  <hr>
+
+  <h2 id="formularios">Elementos de Formulario</h2>
+  <p><a href="index.html#inicio">☝️</a></p>
+  <h3>Elementos de Formularios</h3>
+  <input type="text">
+  <br>
+  <input type="tel">
+  <br>
+  <input type="email">
+  <br>
+  <input type="password">
+  <br>
+  <input type="search">
+  <br>
+  <textarea cols="30" rows="30"></textarea>
+  <br>
+  <select name="" id="" multiple>
+    <option value="">HTML</option>
+    <option value="">CSS</option>
+    <option value="">Java Script</option>
+    <option value="">PHP</option>
+    <option value="">Phyton</option>
+  </select>
+  <br>
+  <input type="text" value="Solo lectura" readonly disabled>
+  <br>
+  <input type="text" placeholder="Escribe tu nombre">
+  <p><a href="index.html#inicio">☝️</a></p>
+  <hr>
+
+  <h2 id="ejemplo-formulario">Ejemplo de Formularios</h2>
+  <h4>Formulario de Login</h4>
+  <form action="https://jonmircha.com/" method="POST" autocomplete="on">
+    <!--https://jonmircha.com/?usuario=root&password=trabajogrado SE ESTA PASANDO LA VARIABLE Y EL VALOR-->
+    <!--for se vincula con el id-->
+    <label for="usuario">Usuario:</label>
+    <!-- <input type="text" name="usuario" id="usuario" placeholder="Escribe tu usuario" pattern="^[A-Za-z]+$" title="El campo solo acepta letras" required autocomplete="off"> -->
+    <input type="text" name="usuario" id="usuario" placeholder="Escribe tu usuario" pattern="^[A-Za-z]+$" title="El campo solo acepta letras" required> <!--name es el nombre de variable que se va enviar desde el formulario-->
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" placeholder="Escribe tu password" required>
+    <br>
+    <input type="submit">
+    <br>
+    <input type="reset">
+  </form>
+  <p><a href="index.html#inicio">☝️</a></p>
+  <hr>
+  <h4>Selects, Radios y Checkbox</h4>
+  <!--http://127.0.0.1:5500/index.html?idioma=en#formularios-->
+  <!--http://127.0.0.1:5500/index.html?idioma=fr&idioma=pt#formularios-->
+
+  <!--http://127.0.0.1:5500/index.html?idioma=en&lenguaje=on#formularios-->
+  <form>
+    <p>Elige tu idioma</p>
+    <!-- <select name="idioma" required> -->
+    <select name="idioma">  
+      <option value="" selected>Elige un idioma</option>
+      <option value="es">Español</option>
+      <option value="en">Ingles</option>
+      <option value="fr">Francés</option>
+      <option value="it">Italiano</option>
+      <option value="pt">Portugués</option>
+    </select>
+    <p>Elige tu lenguaje de programación favorito</p>
+    <input type="radio" name="lenguaje" id="radio-js" value="js">
+    <label for="radio-js">JavaScript</label>
+    <input type="radio" name="lenguaje" id="radio-py" value="py">
+    <label for="radio-py">Phyton</label>
+    <!-- <input type="radio" name="lenguaje" id="radio-php" value="php" checked> -->
+    <input type="radio" name="lenguaje" id="radio-php" value="php">
+    <label for="radio-php">PHP</label>
+    <p>Elige tus intereses:</p>
+    <label>
+      <input type="checkbox" name="intereses" value="deportes">
+      Deportes
+    </label>
+    <label>
+      <input type="checkbox" name="intereses" value="finanzas">
+      Finanzas
+    </label>
+    <label>
+      <input type="checkbox" name="intereses" value="salud">
+      Salud 
+    </label>
+    <label>
+      <input type="checkbox" name="intereses" value="politica">
+      Politica
+    </label>
+    <label>
+      <input type="checkbox" name="intereses" value="ecologia">
+      Ecología
+    </label>
+    <p>
+      <label>
+        <input type="checkbox" name="terminos" required>
+        ¿Aceptas términos y condiciones?
+      </label>
+    </p>
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Limpiar Datos">
+  </form>
+  <h3>Formulario de contacto</h3>
+  <form action="https://formsubmit.co/jonathancastillog@gmail.com" method="POST" >
+    <input type="text" name="nombre" placeholder="Escribe tu nombre" pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$" title="Nombre sólo acepta letras y espacios en blanco" required>
+    <br>
+    <!-- <input type="email" name="correo" placeholder="Escribe tu correo"  pattern="^(\w+[/./-]?){1,}@[a-z]+[/.]\w{2,}$" title="Formato de correo inválido"  required> -->
+    <input type="email" name="correo" placeholder="Escribe tu correo" title="Formato de correo inválido"  required>
+    <br>
+    <textarea name="comentarios"  cols="30" rows="10" required></textarea>
+    <br>
+    <input type="submit">
+  </form>
+  <p><a href="index.html#inicio">☝️</a></p>
+  <hr>
+  <h2 id="data-attributes">Data Attributes</h2>
+  <ul>
+    <li data-id="1" data-name="spring">Primavera</li>
+    <li data-id="2" data-name="summer">Verano</li>
+    <li data-id="3" data-name="fall">Otoño</li>
+    <li data-id="4" data-name="winter">Invierno</li>
+  </ul>
+  <p><a href="index.html#inicio">☝️</a></p>
+  <hr>
+  <h2 id="meta-etiquetas">Meta Etiquetas</h2>
+  <p>Estas etiquetas se incluyen dentro del head.</p>
+  <p>Se usa para el icono de la página web en el navegador del escritorio:</p>
+    <code>&lt;link rel="icon" href="img/favicon-circle.png"&gt;</code>
+  <p>Se usa para asignar un icono a la página web cuando se guarda en la pantalla principal del dispositivo movil:</p>
+    <code>&lt;link rel="apple-touch-icon" href="img/favicon-circle.png"&gt;</code>
+  <p>Cambia el color de la barra de direcciones en el dispositivo movil:</p>
+  <code>&lt;meta name="theme-color" content="#ff6600"&gt;</code>
+  <p><a href="index.html#inicio">☝️</a></p>
+  <hr>
+
+  <p id="final">Fin</p>
+  <script>console.log('Estamos aprendiendo HTML');</script>
+  <script src="assets/codigos.js"></script>
+</body>
+
+</html>

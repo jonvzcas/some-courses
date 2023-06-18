@@ -1,0 +1,128 @@
+/*
+Modelo de Caja
+https://developer.mozilla.org/es/docs/Learn/CSS/Building_blocks/The_box_model
+
+Es la forma en como CSS ve a los elementos en HTML como si fueran cajas con las siguientes propiedades:
+
+1. Contenido (content): el contenido (texto) del elemento HTML, tomando en cuenta sus dimensiones width y height.
+2. Border (border): lo que delimita cada uno de los elementos HTML.
+3. Padding (padding): son las distancias internas desde el borde al contenido.
+4. Margin(margin): distancia externa entre el elemento HTML y sus elementos hermanos o padres.
+
+Dentro de la caja hay que considerar que una caja tendrá cuatro lados. (manecillas del reloj): 
+1. top, 
+2. right, 
+3. bottom, 
+4. left
+
+*/
+
+body {
+  margin: 0;
+}
+
+h1 {
+  width: 400px;
+  height: 200px;
+  /* Propiedades de tipo shortand */
+  border-color: green;
+  border-top-color: brown;
+  border-width: thick; /* delgado = 1 px, medium = 3 px, thick = 5px*/
+  border-style: dotted;
+  border: 10px solid blue;
+}
+
+.caja-uno,
+.caja-dos {
+  background-color: chocolate;
+  border: medium solid orange;
+  /* 
+  Esto aplica para margin y padding
+  1 valor = aplica a los 4 lados
+  2 valores = 
+  primer valor para los lados verticales (top bottom)
+  segundo valor para los lados horizontales (left right)
+  3 valores = 
+  primer valor para top
+  segundo valor para left y right
+  tercer valor para bottom
+  4 valores = Piensa en las manecillas del reloj
+  primer valor para top
+  segundo valor para right
+  tercer valor para bottom
+  cuarto valor para left
+  */
+  padding: 10px;
+  padding: 20px 40px;
+  padding: 0 40px 20px;
+  padding: 0 40px 20px 50px;
+  margin: 10px;
+  margin: 40px 20px;
+  margin: 50px 30px 0;
+  margin: 100px 50px 30px 0;
+}
+
+/*
+Caja de Línea
+- Ocupan el espacio necesario para mostrar su contenido.
+- No tienen dimensiones modificables (alto, ancho).
+- Permiten otros elementos a su lado.
+- Padding y margen solo empujan elementos adyacentes en horizontal, NUNCA EN VERTICAL.
+Caja de Bloque
+- Ocupan todo el ancho disponible.
+- Tienen dimensiones modificables (alto, ancho).
+- No permiten otros elementos a su lado (aunque especifique un ancho, siguen ocupando todo el espacio disponible).
+*/
+
+.caja-linea,
+.caja-bloque {
+  background-color: darkcyan;
+  width: 500px;
+  height: 250px;
+  border: thin solid black;
+  padding: 16px;
+}
+
+.caja-bloque {
+  margin: 32px;
+  display: block;
+}
+
+.caja-linea {
+  margin: 48px;
+  display: inline;
+}
+
+/*
+Propiedad Display
+inline
+block
+inline-block - Se comporta como un elemento de línea pero acepta modificar sus dimensiones (alto y ancho)
+none
+table
+list-item
+flex - ver curso
+grid - ver curso
+*/
+
+.caja-none,
+.caja-linea-bloque,
+.caja-hidden {
+  background-color: darkolivegreen;
+  color: white;
+  width: 600px;
+  height: 300px;
+  border: solid medium black;
+}
+
+.caja-linea-bloque {
+  display: inline-block;
+}
+
+.caja-none {
+  display: none;
+}
+
+.caja-hidden {
+  visibility: hidden;
+}
