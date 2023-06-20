@@ -126,3 +126,109 @@ grid - ver curso
 .caja-hidden {
   visibility: hidden;
 }
+
+.overflow {
+  background-color: aqua;
+  width: 200px;
+  height: 100px;
+  overflow: visible;
+  overflow: hidden;
+  overflow: scroll;
+  overflow: auto;
+}
+
+/*
+Tamaño de Caja
+box-sizing: content-box 
+Esta propiedad calcular las dimensiones de la caja teniendo en cuenta el borde y el padding.
+
+box-sizing: border-box
+El tamaño real de la caja aplica desde el borde.
+
+*/
+
+.box-sizing-content,
+.box-sizing-border {
+  background-color: deepskyblue;
+  box-sizing: content-box;
+  width: 500px;
+  height: 250px;
+  padding: 10px;
+  border: thick solid black;
+}
+
+.box-sizing-border {
+  box-sizing: border-box;
+}
+
+.container-col-3 {
+  background-color: burlywood;
+  width: 600px;
+  height: 300px;
+  margin-top: 20px;
+}
+
+.container-col-3 > * {
+  box-sizing: border-box;
+  width: 200px;
+  border: thin solid red;
+  padding: 10px;
+  float: left;
+}
+
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/*Float*/
+
+.container-floats {
+  background-color: darkcyan;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.clear-fix {
+  clear: both;
+}
+
+/*Colapso de Márgenes Verticales*/
+.margin-collapse {
+  background-color: rgb(43, 198, 226);
+}
+
+.margin-collapse section {
+  border: thin solid black;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.margin-collapse span {
+  border: thin solid black;
+  display: inline-block;
+  margin-right: 16px;
+  margin-left: 16px;
+}
+
+/*Centrado de Cajas*/
+.sitio-web {
+  border: thin solid black;
+  background-color: thistle;
+  width: 800px;
+  height: 1000px;
+  padding: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
