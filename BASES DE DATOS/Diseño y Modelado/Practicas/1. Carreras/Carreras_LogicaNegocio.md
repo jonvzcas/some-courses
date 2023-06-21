@@ -1,17 +1,17 @@
 ## Reglas para normalizar un modelo existente desde cero
 
-1. Identificar las entidades del sistema.✔️   
-1. Identificar los atributos de las entidades.✔️ 
-1. Identificar llaves primarias y foráneas.✔️ 
-1. Asignar una nomenclatura adecuada a las entidades y sus atributos.✔️ 
-1. Identificar las entidades pivote del sistema.✔️ 
-1. Identificar los catálogos del sistema.✔️ 
-1. Identificar los tipos de relaciones del sistema.✔️ 
-1. Crear el Modelo Entidad-Relación del Sistema.✔️ 
-1. Crear el Modelo Relacional de la base de datos del sistema.✔️ 
-1. Identificar los tipos de dato de los atributos de las entidades del sistema.✔️ 
-1. Identificar los atributos que puedan ser únicos en el sistema.✔️ 
-1. Identificar las reglas de negocio (Operaciones CRUD) del sistema.✔️ 
+1. Identificar las entidades del sistema.✔️
+1. Identificar los atributos de las entidades.✔️
+1. Identificar llaves primarias y foráneas.✔️
+1. Asignar una nomenclatura adecuada a las entidades y sus atributos.✔️
+1. Identificar las entidades pivote del sistema.✔️
+1. Identificar los catálogos del sistema.✔️
+1. Identificar los tipos de relaciones del sistema.✔️
+1. Crear el Modelo Entidad-Relación del Sistema.✔️
+1. Crear el Modelo Relacional de la base de datos del sistema.✔️
+1. Identificar los tipos de dato de los atributos de las entidades del sistema.✔️
+1. Identificar los atributos que puedan ser únicos en el sistema.✔️
+1. Identificar las reglas de negocio (Operaciones CRUD) del sistema.✔️
 
 ## Glosario
 
@@ -27,8 +27,9 @@
 1. Listado de Entidades:
 
 ### carreras **(ED)**
+
 - carrera_id **(PK)**
-- nombre 
+- nombre
 - tipo_carrera **(FK)**
 - fecha
 - tiempo
@@ -39,26 +40,30 @@
 - foto
 
 ### tipos_carreras **(EC)**
+
 - tipo_carrera_id **(PK)**
 - descripcion
 - distancia **(UK)**
 
 ### paises **(EC)**
+
 - pais_id **(PK)**
 - Nombre
-	
+
 ## Relaciones:
 
-1. Una **carrera** _pertenece_ a un tipo de carrera. (_1 a 1_)
-1. Una **carrera** _se corre_  en un pais. (_1 a 1_)
+1. Una **carrera** _pertenece_ a un tipo de carrera. (_1 a M_)
+1. Una **carrera** _se corre_ en un pais. (_1 a M_)
 
 ## Diagramas
 
 ### Modelo Entidad - Relación
-![Modelo Entidad - Relación](./Imagenes/modelo_ER_carreras.drawio.png)
 
-### Modelo Relacional 
-![Modelo Relacional](./Imagenes/modelo_relacional_BD_carreras.drawio.png) 
+![Modelo Entidad - Relación](./Imagenes/Carreras_modelo_ER.drawio.png)
+
+### Modelo Relacional
+
+![Modelo Relacional](./Imagenes/Carreras_modelo_relacional_BD.drawio.png)
 
 ## Reglas de negocio (Operaciones CRUD)
 
@@ -85,4 +90,3 @@
 1. Leer el registro de uno o más paises dada una condición en particular.
 1. Actualizar los datos de un país dada una condición en particular.
 1. Eliminar los datos de un país dada una condición en particular.
-
