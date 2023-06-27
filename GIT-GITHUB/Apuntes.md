@@ -249,7 +249,7 @@ _Especificamos que queremos retroceder un commit en el historial de commits (HEA
 
 Ahora si verificamos el estado de **git**
 
-![reset-commit](/Image/reset-commit.png)
+![reset-commit](./Image/reset-commit.png)
 
 notamos que hay cambios para ser agregados al commit y otros que no han sido agregados al área de preparación.
 
@@ -259,7 +259,7 @@ Para lograr que todos los cambios hagan parte del área de preparación y agrega
 
 > `git add .`
 
-![git-add](/Image/git-add.png)
+![git-add](./Image/git-add.png)
 
 [☝](#contenido)
 
@@ -277,7 +277,7 @@ Es una linea independiente de desarrollo en el repositorio.
 
 > `git branch`
 
-![git-add](/Image/git-branch.png)
+![git-add](./Image/git-branch.png)
 
 ## Cambiar de rama
 
@@ -287,7 +287,7 @@ Es una linea independiente de desarrollo en el repositorio.
 
 > `git checkut version-javascript`
 
-![git-add](/Image/git-checkout.png)
+![git-add](./Image/git-checkout.png)
 
 ## Crear una rama y cambiar a ella en un solo paso
 
@@ -297,13 +297,13 @@ Es una linea independiente de desarrollo en el repositorio.
 
 > `git checkout -b nombre-nueva-rama`
 
-![git-add](/Image/git-checkout-b.png)
+![git-add](./Image/git-checkout-b.png)
 
 ## Cambiar el nombre de una rama
 
 > `git checkout -m nuevo-nombre`
 
-![git-add](/Image/git-branch-m.png)
+![git-add](./Image/git-branch-m.png)
 
 **Otro método :**
 
@@ -313,13 +313,13 @@ Es una linea independiente de desarrollo en el repositorio.
 >
 > No es necesario estar en la misma rama
 
-![git-add](/Image/git-branch-m1.png)
+![git-add](./Image/git-branch-m1.png)
 
 ## Eliminar una rama en el repositorio local de git
 
 > `git branch -d rama-a-eliminar`
 
-![git-add](/Image/git-branch-d.png)
+![git-add](./Image/git-branch-d.png)
 
 > [!👀]
 >
@@ -344,7 +344,7 @@ Una manera más informativa de presentar el log de cambios en los archivos es es
 
 > `git log -p`
 
-![git-add](/Image/git-log-p.png)
+![git-add](./Image/git-log-p.png)
 
 ## Fusionar ramas en git
 
@@ -364,11 +364,11 @@ Los conflictos ocurren cuando se tratan de combinar archivos que tienen cambios 
 
 The same file in both branches
 
-![git-add](/Image/branch-version-js.png)
+![git-add](./Image/branch-version-js.png)
 
 <br>
 
-![git-add](/Image/branch-main.png)
+![git-add](./Image/branch-main.png)
 
 Ahora pongamos atención en la primera linea.
 
@@ -384,17 +384,17 @@ Procedemos a crear la fusión.
 
 ⚠ Pero resulta este error. Un conflicto con el contenido del archivo.
 
-![git-add](/Image/conflict.png)
+![git-add](./Image/conflict.png)
 
 Se puede resolver de varias maneras a través del editor de conflictos en VS-code
 
-![git-add](/Image/editor-conflicts.png)
+![git-add](./Image/editor-conflicts.png)
 
 Verificamos el estado de git y vemos que el cambio esta listo para ser agregado.
 
 > `git status`
 
-![git-add](/Image/merging.png)
+![git-add](./Image/merging.png)
 
 Continuar con el proceso de **merge**
 
@@ -402,7 +402,7 @@ Continuar con el proceso de **merge**
 
 Y se despliega el editor para crear el commit del merge
 
-![git-add](/Image/editor-merge.png)
+![git-add](./Image/editor-merge.png)
 
 Guardar, cerrar y verificar el cambio.
 
@@ -420,7 +420,7 @@ Esto se hace para no comprometer el correo personal en las contribuciones y las 
 
 - En **Settings** ingresar al apartador **Emails**
 - Copiar el correo asignado en **GitHub** e ir a la terminal de **Git**
-  ![correo-git](/Image/correo-git.png)
+  ![correo-git](./Image/correo-git.png)
 - Configurar el user.email en la terminal: git `config --global user.email 159988000+ejemplo@users.noreply.github.com`
 
 [☝](#contenido)
@@ -487,7 +487,7 @@ Despues de públicar un cambio en el repositorio bifurcado.
 
 Se puede abrir un pull request, o un borrador del mismo para enviar más adelante.
 
-![pull-reques](/Image/pull-requests.png)
+![pull-reques](./Image/pull-requests.png)
 
 # Pull requests a partir de una rama
 
@@ -503,7 +503,7 @@ Luego se abre un pull requests y se procede a hacer la comparación para verific
 
 Permiten registrar, tareas, asuntos o aspectos del repositorio. Permiten asignar tareas a miembros del equipo, especificar etiquetas al issue, y recibir notificaciones. Los issues se pueden editar, cerrar, borrar. Los issue se identifican a través de un número (_o caso_).
 
-![issue](/Image/issue.png)
+![issue](./Image/issue.png)
 
 [☝](#contenido)
 
@@ -535,13 +535,13 @@ Permiten registrar, tareas, asuntos o aspectos del repositorio. Permiten asignar
 
 > `git branch -a`
 
-![remote-branches](/Image/remote-branches.png)
+![remote-branches](./Image/remote-branches.png)
 
 6. Eliminamos la rama remote así:
 
 > `git push origin -d remote-branch`
 
-![delete-remote-branch](/Image/delete-remote-branch.png)
+![delete-remote-branch](./Image/delete-remote-branch.png)
 
 _Listo parcero!_
 
