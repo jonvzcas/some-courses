@@ -535,7 +535,7 @@ La cláusula HAVING se utiliza en SQL para filtrar los resultados de una consult
 
 ![having-pedidos](/Imagenes/having-pedidos.png)
 
-La consulta muestra el grupo de productos que tuvieron ventas inferiores a 30000; en este ejemplo el producto con id 5 tuvo ventas inferiores a un monto de 30000.
+La consulta muestra el grupo de productos que tuvieron ventas inferiores a 30000. En este ejemplo el producto con id 5 tuvo ventas inferiores a un monto de 30000.
 
 [☝️](#contenido)
 
