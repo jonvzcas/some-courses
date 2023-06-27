@@ -961,7 +961,7 @@ Inicialmente, el programa empieza en modo de comando. El modo de comando se util
 
 Una vez haya agregado texto a un documento, deberá presionar la tecla **Esc** para volver al modo de comando y realizar acciones como mover el cursor.
 
-![cap-one](/Image/Writting-on-vim.png "Escribiendo en vim")
+![cap-one](./Image/Writting-on-vim.png "Escribiendo en vim")
 
 Los comandos de movimiento en vi tienen dos aspectos, el movimiento (_motion_) y un prefijo numérico opcional (_count_) que indica cuántas veces se debe repetir ese movimiento. El formato general es el siguiente:
 
