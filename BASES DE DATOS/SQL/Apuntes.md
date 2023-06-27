@@ -356,7 +356,7 @@ El resultado devuelve los registros donde no encuentre la coincidencia
 
 ### Eliminar registros (DELETE)
 
-> ![👀] > ![delete_from](/Imagenes/delete_from.png)
+> ![👀] > ![delete_from](./Imagenes/delete_from.png)
 > DELETE siempre se debe especificar con WHERE que registros se van a eliminar, pues de no hacerlo se borrarían todos los registros de la tabla.
 
 **_Ejemplo 16 :_**
@@ -375,19 +375,19 @@ A diferencia de DELETE, TRUNCATE también elimina la cache que conserva el conse
 
 Tabla antes de ejecutar TRUNCATE
 
-![table_before](/Imagenes/table.png)
+![table_before](./Imagenes/table.png)
 
 Ahora ejecutamos un DELETE
-![table_empty](/Imagenes/table_empty.png)
+![table_empty](./Imagenes/table_empty.png)
 
 Insertamos nuevamente los datos
-![insert](/Imagenes/insert.png)
+![insert](./Imagenes/insert.png)
 _Podemos ver que la nueva inserción ha respetado el consecutivo, ahora bien, para evitar esto se ejecuta_ TRUNCATE
 
 > `TRUNCATE TABLE`
 
 Así se verian los usuario_id de los registros luego de ejecutar TRUNCATE y volver a insertar los datos. Note que ahora el usuario_id empieza desde el 1.
-![new_table](/Imagenes/new_table.png)
+![new_table](./Imagenes/new_table.png)
 
 [☝️](#contenido)
 
@@ -438,17 +438,17 @@ Así se verian los usuario_id de los registros luego de ejecutar TRUNCATE y volv
 
 **_Ejemplo 18 :_**
 
-![productos](/Imagenes/productos.png)
+![productos](./Imagenes/productos.png)
 
 `SELECT precio * cantidad AS subtotal FROM productos WHERE producto_id = 3;`
 
-![subtotal-where](/Imagenes/subtotal-where.png)
+![subtotal-where](./Imagenes/subtotal-where.png)
 
 **_Ejemplo 19 :_**
 
 > `SELECT nombre, descripcion, precio, cantidad, (precio*cantidad) AS subtotal FROM productos;`
 
-![subtotal](/Imagenes/subtotal.png)
+![subtotal](./Imagenes/subtotal.png)
 
 [☝️](#contenido)
 
@@ -473,7 +473,7 @@ Así se verian los usuario_id de los registros luego de ejecutar TRUNCATE y volv
 
 Teniendo en cuenta la tabla '**productos**':
 
-![estructura-productos](/Imagenes/describe_productos.png)
+![estructura-productos](./Imagenes/describe_productos.png)
 
 Se crea la tabla '**pedidos**' teniendo en cuenta que el campo (_producto_id_) debe tener el mismo tipo de dato que el campo 'producto_id' en la tabla pedidos '**productos**':
 
@@ -484,13 +484,13 @@ Se crea la tabla '**pedidos**' teniendo en cuenta que el campo (_producto_id_) d
     	total DECIMAL(10,2)
     );
 
-![describe-pedidos](/Imagenes/describe_pedidos.png)
+![describe-pedidos](./Imagenes/describe_pedidos.png)
 
 Ahora procedemos a crear la relación desde la tabla '**pedidos**' con la siguiente sintaxis:
 
     ALTER TABLE pedidos ADD CONSTRAINT fk_pedidos_productos FOREIGN KEY (producto_id) REFERENCES productos(producto_id);
 
-![fk_pedidos_productos](/Imagenes/fk_pedidos_productos.png)
+![fk_pedidos_productos](./Imagenes/fk_pedidos_productos.png)
 
 La relación ha sido creaada, si nos fijamos en el campor 'producto_id' en la estructura de la tabla pedidos tiene en el KEY el Value MUL. Esto quiere decir que un mismo valor de "producto_id" puede aparecer en múltiples registros de la tabla "pedidos".
 
@@ -515,13 +515,13 @@ Procedemos a insertar registros en la tabla pedidos:
         (6,"2023-04-2 10:00:00",37999.99)
         ;
 
-![insert-pedidos](/Imagenes/insert-pedidos.png)
+![insert-pedidos](./Imagenes/insert-pedidos.png)
 
 Ejecutamos la sentencia para saber el total de ventas por producto:
 
 > `SELECT producto_id, SUM(total) AS monto_total FROM pedidos GROUP BY producto_id;`
 
-![group-by-pedidos](/Imagenes/group-by-pedidos.png)
+![group-by-pedidos](./Imagenes/group-by-pedidos.png)
 
 [☝️](#contenido)
 
@@ -533,7 +533,7 @@ La cláusula HAVING se utiliza en SQL para filtrar los resultados de una consult
 
     `SELECT producto_id, SUM(total) AS monto_total FROM pedidos GROUP BY producto_id HAVING monto_total < 30000;`
 
-![having-pedidos](/Imagenes/having-pedidos.png)
+![having-pedidos](./Imagenes/having-pedidos.png)
 
 La consulta muestra el grupo de productos que tuvieron ventas inferiores a 30000. En este ejemplo el producto con id 5 tuvo ventas inferiores a un monto de 30000.
 
