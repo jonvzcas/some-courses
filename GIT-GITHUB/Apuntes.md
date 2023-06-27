@@ -43,6 +43,7 @@
 1. [Pull requests (Contribuir)](#pull-requests-contribuir)
 1. [Pull requests a partir de una rama](#pull-requests-a-partir-de-una-rama)
 1. [Issues (Lista tareas pendientes)](#issues-lista-tareas-pendientes)
+1. [Eliminar una rama remota desde gitbash](#eliminar-una-rama-remota-desde-gitbash)
 
 ---
 
