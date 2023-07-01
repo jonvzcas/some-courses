@@ -28,6 +28,14 @@
 1. [FUNCIONES DE AGRUPAMIENTO](#funciones-de-agrupamiento)
 1. [RELACIONES ENTRE TABLAS](#relaciones-entre-tablas)
 1. [Practica clausula GROUP BY](#practica-clausula-group-by)
+   - [HAVING](#having)
+   - [DISTINCT](#distinct)
+   - [ORDER](#order)
+1. [INDICES](#indices)
+   - [TABLA INDEXADA VS NO INDEXADA](#tabla-indexada-vs-no-indexada)
+   - [Definir un indice](#definir-un-indice)
+1. [INDICE FULL TEXT](#indice-full-text)
+1. [APLICAR INDICES A UNA TABLA EXISTENTE](#aplicar-indices-a-una-tabla-existente)
 
 ## TIPOS DE SENTENCIAS EN SQL
 
@@ -334,11 +342,11 @@ El resultado devuelve los registros donde no encuentre la coincidencia
 
 ### Actualizar registros (UPDATE)
 
-> ![👀]
+> [!👀]
 >
 > UPDATE siempre se debe especificar con WHERE que registros se van a actualizar, pues de no hacerlo se modificarían todos los registros de la tabla.
 
-> ![👀]
+> [!👀]
 >
 > _En este ejemplo no se utiliza AND porque un usuario no tiene dos usuario_id._
 
@@ -356,7 +364,7 @@ El resultado devuelve los registros donde no encuentre la coincidencia
 
 ### Eliminar registros (DELETE)
 
-> ![👀] > ![delete_from](./Imagenes/delete_from.png)
+> [!👀] > ![delete_from](./Imagenes/delete_from.png)
 > DELETE siempre se debe especificar con WHERE que registros se van a eliminar, pues de no hacerlo se borrarían todos los registros de la tabla.
 
 **_Ejemplo 16 :_**
@@ -536,6 +544,402 @@ La cláusula HAVING se utiliza en SQL para filtrar los resultados de una consult
 ![having-pedidos](./Imagenes/having-pedidos.png)
 
 La consulta muestra el grupo de productos que tuvieron ventas inferiores a 30000. En este ejemplo el producto con id 5 tuvo ventas inferiores a un monto de 30000.
+
+### DISTINCT
+
+La cláusula DISTINCT se utiliza en una consulta para eliminar filar duplicadas de los resultados. Cuando se utiliza la cláusula DISTINCT en una declaración SELECT, solo se mostrará una fila para cada combinación única de valores en las columnas especificadas.
+
+**_Ejemplo 21 :_**
+
+Tenemos esta tabla "usuarios":
+
+![usuarios](./Imagenes/usuarios.png)
+
+Si se ejecuta la consulta:
+
+> `SELECT DISTINCT apellidos FROM usuarios;`
+
+Se obtienen los siguientes resultados:
+
+![apellidos](./Imagenes/apellidos.png)
+
+La cláusula DISTINCT eliminó las filas duplicadas basándose en los valores únicos en la columna "apellidos". Solo se muestra uan vez cada apellido, aunque haya varios usuarios con el mismo apellido en la tabla.
+
+### ORDER
+
+Permite ordenar con base a un campo de una tabla.
+
+**_Ejemplo 22 :_**
+
+Tenemos esta tabla "usuarios":
+
+![usuarios](./Imagenes/usuarios.png)
+
+Si se ejecuta la consulta:
+
+> `SELECT nombre FROM usuarios ORDER BY nombre;`
+
+Se obtienen los siguientes resultados:
+
+![order-nombre](./Imagenes/order-nombres.png)
+
+Por defecto el resultado de la consulta se muestra los datos de la columna nombres en orden ascendente (**ASC**). Si se quiere mostrar el resultado en orden descendente, añadimos (**DESC**).
+
+**_Ejemplo 23 :_**
+
+> `SELECT nombre FROM usuarios ORDER BY nombre DESC;`
+
+![order-desc-nombres](./Imagenes/order-desc-nombres.png)
+
+**_Ejemplo 24 :_**
+
+**Ordenando por nombre y apellido**
+
+> `SELECT nombre, apelldidos FROM usuarios ORDER BY nombre, apellido;`
+
+![order-nom-apell](./Imagenes/order-nom-apell.png)
+
+> [!👀]
+>
+> _Se puede usar en combinación con **WHERE** pero la cláusula **ORDER BY** debe ir al final._
+>
+> Ejemplo:
+>
+> `SELECT nombre, apellidos FROM usuarios WHERE apellidos = 'Pérez' ORDER BY nombre DESC;`
+>
+> ![order-where](./Imagenes/order-where.png)
+
+[☝️](#contenido)
+
+### BETWEEN
+
+Genera un resultado con base a un rango.
+
+**_Ejemplo 24 :_**
+
+Tenemos la siguiente tabla:
+
+![pedidos](./Imagenes/insert-pedidos.png)
+
+Ejecutamos la siguiente consulta:
+
+> `SELECT * FROM pedidos WHERE total BETWEEN 5000 AND 23000;`
+
+Tenemos el siguiente resultado:
+
+## ![between-pedidos](./Imagenes/between-pedidos.png)
+
+> [!👀]
+>
+> _También se pueden utilizar expresiones regulares en búsquedas de registros._
+>
+> Ejemplo:
+>
+> Tenemos la tabla usuarios:
+>
+> ![usuarios](./Imagenes/usuarios.png)
+>
+> Ejecutamos la siguiente consulta:
+>
+> `SELECT * FROM usuarios WHERE correo REGEXP '[0-9]';`
+>
+> ![order-where](./Imagenes/regexp-usuarios.png)
+>
+> Vemos como aparecen registros cuyos correos contienen números.
+
+[☝️](#contenido)
+
+---
+
+## FUNCIONES DE CADENAS DE TEXTO
+
+**_Ejemplo 25 :_**
+
+`SELECT UPPER(nombre), UCASE(apellidos) FROM usuarios;`
+
+ó
+
+`SELECT UCASE(nombre), UCASE(apellidos) FROM usuarios;`
+
+Output:
+
+![upper](./Imagenes/upper.png)
+
+`SELECT LOWER(nombre), LOWER(apellidos) FROM usuarios;`
+
+ó
+
+`SELECT LCASE(nombre), LCASE(apellidos) FROM usuarios;`
+
+![lower](/Imagenes/lower.png)
+
+### Substraer subcadenas del lado izquierdo y lado derecho
+
+**_Ejemplo 26 :_**
+
+`SELECT LEFT(nombre,3), RIGHT(apellidos,3) FROM usuarios;`
+
+Output:
+
+![left-right](./Imagenes/left-right.png)
+
+### Otras funciones :
+
+`SELECT LENGTH(nombre) FROM usuarios;`
+
+![length](./Imagenes/length.png)
+
+`SELECT REPEAT(nombre,2) FROM usuarios;`
+
+![repeat](./Imagenes/repeat.png)
+
+`SELECT REVERSE(nombre) FROM usuarios;`
+
+![reverse](./Imagenes/reverse.png)
+
+`SELECT REPLACE(nombre, 'a', '4') FROM usuarios;`
+
+![replace](./Imagenes/replace.png)
+
+Suprimir espacios al comienzo y/o final de las palabras:
+
+`SELECT ('    Viernes    ');`
+
+`SELECT LTRIM('    Viernes    ');`
+
+![ltrim](./Imagenes/ltrim.png)
+
+<br>
+
+`SELECT ('    Viernes    ');`
+
+`SELECT RTRIM('    Viernes    ');`
+
+![rtrim](./Imagenes/rtrim.png)
+
+<br>
+
+`SELECT ('    Viernes    ');`
+
+`SELECT TRIM('    Viernes    ');`
+
+![trin](./Imagenes/trim.png)
+
+<br>
+
+`SELECT CONCAT(nombre,' ',apellidos) FROM usuarios;`
+
+![concat](./Imagenes/concat.png)
+
+<br>
+
+`SELECT CONCAT_WS(' ',nombre,apellidos,correo) FROM usuarios;`
+
+![concat_ws](./Imagenes/concat_ws.png)
+
+[☝️](#contenido)
+
+---
+
+## INDICES
+
+Los índices en bases de datos son estructuras de datos que se crean para mejorar el rendimiento de las consultas y búsquedas en una base de datos. Un índice se construye sobre una o más columnas de una tabla y proporciona una forma rápida de acceder a los datos según los valores de esas columnas.
+
+Cuando se crea un índice en una columna, se crea una estructura de datos adicional que contiene los valores de esa columna y los punteros a las filas correspondientes en la tabla. Esto permite que el motor de la base de datos encuentre rápidamente las filas que coinciden con los valores especificados en las consultas.
+
+Los índices pueden mejorar significativamente el rendimiento de las consultas, especialmente cuando se realizan búsquedas en grandes conjuntos de datos. Al utilizar un índice, la base de datos puede evitar realizar una búsqueda secuencial en toda la tabla y en su lugar realizar una búsqueda más rápida y eficiente en el índice.
+
+Sin embargo, los índices también tienen algunas implicaciones en el rendimiento y el almacenamiento de la base de datos. Cada índice ocupa espacio adicional en disco y debe mantenerse actualizado a medida que los datos cambian. Además, los índices pueden ralentizar las operaciones de inserción, actualización y eliminación de datos, ya que la base de datos debe actualizar los índices correspondientes.
+
+Es importante diseñar cuidadosamente los índices en una base de datos, considerando las consultas más comunes que se realizarán y equilibrando el rendimiento de las consultas con el costo adicional de almacenamiento y mantenimiento de los índices.
+
+### TABLA INDEXADA VS NO INDEXADA
+
+Un comparativo de ejemplo realizando una busqueda por columna **Indexada** vs **NO indexada**.
+
+**TABLA NO IDEXADA**
+
+![sin-index](./Imagenes/sin-index.png)
+
+**TABLA INDEXADA**
+
+![sin-index](./Imagenes/si-index.png)
+
+Veamos que la velocidad de la consulta fue de 1ms mientras que en la tabla no indexada fue de 2ms.
+
+**Mostrar los indices de una tabla:**
+
+> `SHOW INDEX FROM productos;`
+
+![index](./Imagenes/index1.png)
+
+> `SHOW INDEX FROM pedidos;`
+
+![index](./Imagenes/index2.png)
+
+> `SHOW INDEX FROM usuarios;`
+
+correo es un campo unique
+![index](./Imagenes/index3.png)
+
+### Definir un indice
+
+Indice que no sea ni clave primaria ni campo único.
+
+**_Ejemplo 26 :_**
+
+    CREATE TABLE usuarios(
+    	usuario_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    	nombre VARCHAR(30) NOT NULL,
+    	apellidos VARCHAR(30) NOT NULL,
+    	correo VARCHAR(50) UNIQUE,
+    	edad INT DEFAULT 0,
+    	ciudad VARCHAR(30),
+    	INDEX idx_apellidos (apellidos),
+    	INDEX idx_ciudad (ciudad)
+    );
+
+En este ejemplo se establecen dos indices (uno para _**apellidos**_ y otro para _**ciudad**_):
+
+`SHOW INDEX FROM usuarios;`
+
+![index](./Imagenes/index4.png)
+
+> [!👀]
+>
+> _Tambien se pueden agrupar los indexes de la siguiente manera:_
+
+     CREATE TABLE usuarios(
+      usuario_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      nombre VARCHAR(30) NOT NULL,
+      apellidos VARCHAR(30) NOT NULL,
+      correo VARCHAR(50) UNIQUE,
+      edad INT DEFAULT 0,
+      ciudad VARCHAR(30),
+      INDEX idx_usuarios (apellidos,ciudad)
+    );
+
+Vemos en la creación de la tabla que apellidos y ciudad se encuentran indezados bajo el alias 'idx_usuarios'
+
+`SHOW INDEX FROM usuarios;`
+
+![index-agrupados](./Imagenes/index-agrupados.png)
+
+[☝️](#contenido)
+
+---
+
+## INDICE FULL TEXT
+
+Permite realizar la consulta más flexible a través de campos agrupados en un indice de texto completo.
+
+Este tipo de índice permite realizar búsquedas rápidas y eficientes en el contenido textual de los documentos, en lugar de buscar solo por metadatos o información estructural.
+
+Un índice de texto completo tiene en cuenta el contenido textual completo de cada documento, lo que incluye palabras, frases, sinónimos y otros aspectos lingüísticos.
+
+**_Ejemplo 27 :_**
+
+Forma de crear un FULLTEXT
+
+    CREATE TABLE usuarios(
+      usuario_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      nombre VARCHAR(30) NOT NULL,
+      apellidos VARCHAR(30) NOT NULL,
+      correo VARCHAR(50) UNIQUE,
+      edad INT DEFAULT 0,
+      ciudad VARCHAR(30),
+      FULLTEXT fi_usuarios (nombre,apellidos,ciudad)
+    );
+
+Luego de tener los datos insertados:
+
+    INSERT INTO usuarios (nombre,apellidos,correo,edad,ciudad) VALUES
+    ("Climaco","Castle","climac@gmail.com",70,"Buenaventura"),
+    ("Lucy","Del Rosario","lrosario@gmail.com",62,"Buenaventura"),
+    ("Rodrigo","Gómez","rgomez@gmail.com", 54,"Buenaventura"),
+    ("Oscar","Pérez","edgemaster@gmail.com",14,"Buenaventura"),
+    ("Camila","Pérez","cperez@gmail.com",19,"Buenaventura"),
+    ("Thalia","Asprilla","jasprilla@gmail.com",27,"Quilichao"),
+    ("Jonathan","Castillo","jctillo@gmail.com",39,"Quilichao"),
+    ("Carmen","Mena","cmena@gmail.com", 67,"Buenaventura"),
+    ("Efren","Berty","fish2000@gmail.com",66,"Buenaventura"),
+    ("Claudia","Cano","ccano@gmail.com", 20,"Buenaventura"),
+    ("Lasie","Cabezas","mascota00@gmail.com",8,"Buenaventura"),
+    ("Romeo","Santos","mascota01@gmail.com",1,"Buenaventura");
+
+Y verificar los indices de la tabla usuarios:
+
+`SHOW INDEX FROM usuarios;`
+
+![full-text](./Imagenes/full-text.png)
+
+Procedemos a hacer la consultar por cualquiera de los datos contenidos en las columnas que hacen parte del indice full text. La busqueda no es sensible a mayúsculas o minúsculas.
+
+SINTAXIS DE EJEMPLO:
+
+`SELECT * FROM usuarios WHERE MATCH(nombre,apellidos,ciudad) AGAINST ('QUILICHAO' IN BOOLEAN MODE);`
+
+La consulta realizó la busqueda en el conjunto de datos contenido en el capo fulltext:
+
+![fulltex](./Imagenes/fulltext.png)
+
+[☝️](#contenido)
+
+---
+
+## APLICAR INDICES A UNA TABLA EXISTENTE
+
+**_Ejemplo 28 :_**
+
+1. Alterar la tabla para añadir la clave primaria al campo usuario_id de la tabla usuarios:
+
+`ALTER TABLE usuarios ADD CONSTRAINT pk_usuario_id PRIMARY KEY(usuario_id);`
+
+![primary-key](./Imagenes/primary-key.png)
+
+2. Asignar al campo que contiene la llave primaria el atributo autoincrement:
+
+`ALTER TABLE usuarios MODIFY COLUMN usuario_id INT AUTO_INCREMENT;`
+
+Listo 👌
+
+**Bonus :**
+
+### Añadir atributo de campo único a una columna de una tabla existente:
+
+**_Ejemplo 29 :_**
+
+`ALTER TABLE usuarios ADD CONSTRAINT uq_correo UNIQUE(correo);`
+
+### Añadir un index (_común y corriente_) a una columna de una tabla existente:
+
+`ALTER TABLE nameTable ADD INDEX i_nameField(field);`
+
+**_Ejemplo 30 :_**
+
+Añadiendo un index para dos campos al mismo tiempo:
+
+`ALTER TABLE usuarios ADD INDEX i_nombre_apellido(nombre,apellidos);`
+
+![index](./Imagenes/index.png)
+
+### Añadir un index FULLTEX a una tabla existente:
+
+`ALTER TABLE nameTable ADD FULLTEXT INDEX fi_search (nameField_a, nameField_b, nameField_c);`
+
+**_Ejemplo 31 :_**
+
+Añadiendo un campo de texto completo incluyendo tres campos de la tabla usuarios:
+
+`ALTER TABLE usuarios ADD FULLTEXT INDEX fi_busqueda(nombre,apellidos,ciudad);`
+
+![alter-fulltext](./Imagenes/alter-fulltext.png)
+
+Realizando una consulta por apellido en un FULLTEXT:
+
+`SELECT * FROM usuarios WHERE MATCH(nombre,apellidos,ciudad) AGAINST('asprilla' IN BOOLEAN MODE);`
+
+![resultado-fulltext](./Imagenes/resultado-fulltext.png)
 
 [☝️](#contenido)
 
