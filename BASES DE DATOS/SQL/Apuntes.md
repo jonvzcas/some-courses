@@ -16,6 +16,7 @@
    - [IN](#in)
    - [Describir las características de una tabla](#describir-las-características-de-una-tabla)
    - [Modificar (ALTER) una tabla](#modificar-alter-una-tabla)
+1. [RENOMBRAR UNA TABLA](#renombrar-una-tabla)
 1. [ELIMINAR (DROP) UNA TABLA](#eliminar-drop-una-tabla)
 1. [OPERACIONES CRUD](#operaciones-crud)
    - [Insertar (INSERT)](#insertar-insert)
@@ -27,6 +28,7 @@
    - [Colummnas calculadas](#columnas-calculadas)
 1. [FUNCIONES DE AGRUPAMIENTO](#funciones-de-agrupamiento)
 1. [RELACIONES ENTRE TABLAS](#relaciones-entre-tablas)
+   - [Como modificar un CONSTRAINT](#como-modificar-un-constraint)
 1. [Practica clausula GROUP BY](#practica-clausula-group-by)
    - [HAVING](#having)
    - [DISTINCT](#distinct)
@@ -34,8 +36,16 @@
 1. [INDICES](#indices)
    - [TABLA INDEXADA VS NO INDEXADA](#tabla-indexada-vs-no-indexada)
    - [Definir un indice](#definir-un-indice)
-1. [INDICE FULL TEXT](#indice-full-text)
-1. [APLICAR INDICES A UNA TABLA EXISTENTE](#aplicar-indices-a-una-tabla-existente)
+   - [INDICE FULL TEXT](#indice-full-text)
+   - [APLICAR INDICES A UNA TABLA EXISTENTE](#aplicar-indices-a-una-tabla-existente)
+   - [Añadir atributo de campo único a una columna de una tabla existente](#añadir-atributo-de-campo-único-a-una-columna-de-una-tabla-existente)
+   - [Añadir un index (_común y corriente_) a una columna de una tabla existente](#añadir-un-index-común-y-corriente-a-una-columna-de-una-tabla-existente)
+   - [Añadir un index FULLTEX a una tabla existente](#añadir-un-index-fulltex-a-una-tabla-existente)
+   - [ELIMINAR INDICES](#eliminar-indices)
+1. [JOINS SQL](#joins-sql)
+   - [Combinación Interna (INNER JOIN)](#combinación-interna-inner-join)
+   - [Combinación Externa (OUTER JOIN)](#combinación-externa-outer-join)
+   - [RIGHT OUTER JOIN - RIGHT JOIN](#right-outer-join---right-join)
 
 ## TIPOS DE SENTENCIAS EN SQL
 
@@ -179,6 +189,10 @@ Si se esta trabajando en remoto, actualizar privilegios:
 **Eliminar un campo**
 
 > `ALTER TABLE usuarios DROP COLUMN nacimiento`;
+
+## RENOMBRAR UNA TABLA
+
+`RENAME TABLE name_database.name_table TO name_database.new_name_table;`
 
 ## ELIMINAR (DROP) UNA TABLA
 
@@ -477,7 +491,25 @@ Así se verian los usuario_id de los registros luego de ejecutar TRUNCATE y volv
 
 ## RELACIONES ENTRE TABLAS
 
+SINTAXIS (_al momento de crear la tabla_)
+
+    CREATE TABLE table_a (
+      field_one,
+      field_two,
+      ...,
+      ...,
+      field_n,
+      id_table_b,
+      FOREIGN KEY (id_table_b) REFERENCES table_b(id_table_b);
+    )
+
+> [!👀]
+>
+> _The **table_b** must to be maked previusly_
+
 **_Ejemplo 19 :_**
+
+**MÉTODO CUANDO LAS TABLAS YA EXISTEN**
 
 Teniendo en cuenta la tabla '**productos**':
 
@@ -500,7 +532,16 @@ Ahora procedemos a crear la relación desde la tabla '**pedidos**' con la siguie
 
 ![fk_pedidos_productos](./Imagenes/fk_pedidos_productos.png)
 
-La relación ha sido creaada, si nos fijamos en el campor 'producto_id' en la estructura de la tabla pedidos tiene en el KEY el Value MUL. Esto quiere decir que un mismo valor de "producto_id" puede aparecer en múltiples registros de la tabla "pedidos".
+La relación ha sido creada, si nos fijamos en el campor 'producto_id' en la estructura de la tabla pedidos tiene en el KEY el Value MUL. Esto quiere decir que un mismo valor de "producto_id" puede aparecer en múltiples registros de la tabla "pedidos".
+
+### Como modificar un CONSTRAINT
+
+1. Eliminar el CONSTRAINT
+2. Volver a añadir el FOREING KEY que contiene el nuevo CONSTRAINT
+
+**_Eliminar el CONSTRAINT_**
+
+`ALTER TABLE companies DROP CONSTRAINT fk_pedidos_productos;`
 
 [☝️](#contenido)
 
@@ -825,10 +866,6 @@ Vemos en la creación de la tabla que apellidos y ciudad se encuentran indezados
 
 ![index-agrupados](./Imagenes/index-agrupados.png)
 
-[☝️](#contenido)
-
----
-
 ## INDICE FULL TEXT
 
 Permite realizar la consulta más flexible a través de campos agrupados en un indice de texto completo.
@@ -883,10 +920,6 @@ La consulta realizó la busqueda en el conjunto de datos contenido en el capo fu
 
 ![fulltex](./Imagenes/fulltext.png)
 
-[☝️](#contenido)
-
----
-
 ## APLICAR INDICES A UNA TABLA EXISTENTE
 
 **_Ejemplo 28 :_**
@@ -940,6 +973,378 @@ Realizando una consulta por apellido en un FULLTEXT:
 `SELECT * FROM usuarios WHERE MATCH(nombre,apellidos,ciudad) AGAINST('asprilla' IN BOOLEAN MODE);`
 
 ![resultado-fulltext](./Imagenes/resultado-fulltext.png)
+
+## ELIMINAR INDICES
+
+SINTAXIS:
+
+**_Ejemplo 32 :_**
+
+`ALTER TABLE usuarios DROP INDEX fi_busqueda;`
+
+Donde 'fi_busqueda' es el alias del campo indexado o el conjunto de campos indexados.
+
+[☝️](#contenido)
+
+---
+
+## JOINS SQL
+
+> La sentencia JOIN (unir, combinar) de SQL permite combinar registros de una o más tablas en una base de datos. hay tres tipo de JOIN:
+>
+> - Interno
+> - Externo
+> - Cruzado
+>
+> El estándar ANSI del SQL especifica cinco tipos de JOIN:
+>
+> 1. INNER
+> 1. LEFT OUTER
+> 1. RIGHT OUTER
+> 1. FULL OUTER
+> 1. CROSS
+> 1. Una tabla puede unirse a sí misma, produciendo una auto-combinación, SELF-JOIN
+>
+> Matemáticamente, JOIN es composición relacional, la operación fundamental en el álgebra relacional, y, generalizando, es una función de composición.
+>
+> ### Combinación Interna (INNER JOIN)
+>
+> ![inner-join](./Imagenes/SQL_Join_-_07_A_Inner_Join_B.svg.png)
+>
+> Con esta operación cada registro de la tabla A es combinado con los correspondientes de la tabla B que satisfagan las condiciones que se especifiquen en el predicado JOIN. Cualquier registro de la tabla A o de la tabla B que no tenga un correpondiente en la otra tabla es excluido.
+>
+> Fuente [Wikedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
+
+**_Ejemplo 33 :_**
+
+INNER JOIN
+
+Para este ejemplo tenemos la tablas:
+
+TABLE 'legal_form'
+
+![legal_form](./Imagenes/table_legal_form.png)
+
+TABLE 'companies'
+
+![companies](./Imagenes/table_companies.png)
+
+[☝️](#contenido)
+
+Objetivo:
+
+Traer a consulta los registros de ambas tablas que se correspondan con 'id_company' e 'id_legal_form'
+
+SINTAXIS (explícita)
+
+> `SELECT * FROM companies`
+>
+> `INNER JOIN`
+>
+> `legal_form ON companies.id_legal_form = legal_form.id_legal_form;`
+
+SINTAXIS (implícita)
+
+> `SELECT * FROM companies, legal_form`
+>
+> `WHERE companies.id_legal_form = legal_form.id_legal_form;`
+
+> [!👀]
+>
+> Note que el campo común en ambas tablas es id_legal_form
+
+RESULTADO
+
+> [!👀]
+>
+> Las dos últimas columnas corresponden a la tabla 'legal_form'.
+
+![inner-join](./Imagenes/inner-join.png)
+
+> [!👀]
+>
+> Note también que los otros registros de la tabla 'legal_form' no se mostraron en la consulta
+
+![excl_legal_form](./Imagenes/excl_legal_form.png)
+
+> **_Theta Join_**
+>
+> A la combinación que utiliza comparaciones dentro del predicado _JOIN_ se llama theta-join. Se pueden hacer comparaciones de <, <=, =, <>, >=, y >.
+>
+> Fuente [Wikedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
+
+**_Ejemplo 34 :_**
+
+Tenemos las tablas:
+
+TABLE 'cities'
+
+![cities](./Imagenes/cities.png)
+
+TABLE 'companies'
+
+![companies](./Imagenes/companies.png)
+
+Objetivo:
+
+Consultar las ciudades en donde hay empresas empresas con capital inferior a $130'000.000
+
+SINTAXIS
+
+> `SELECT cities.id_city,companies.name, companies.company_value`
+>
+> `FROM cities JOIN companies`
+>
+> `ON cities.city = companies.id_city AND > companies.company_value < 130000000;`
+
+RESULTADO
+
+![city-companies-value](./Imagenes/city-companies-value.png)
+
+Podemos observar las ciudades en donde hay empresas con un capital inferior a $130'000.000
+
+> **_Natural Join_**
+>
+> Es una especialización de la combinación de igualdad, anteriormente mencionada, que se representa por el símbolo ⋈. En este caso se comparan todas las columnas que tengan el mismo nombre en ambas tablas. La tabla resultante contiene sólo una columna por cada par de columnas con el mismo nombre.
+>
+> Fuente [Wikedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
+
+**_Ejemplo 35 :_**
+
+Tenemos las tablas:
+
+TABLE sectors
+
+![table-sectors](./Imagenes/table-sectors.png)
+
+TABLE activities
+
+![table-activities](./Imagenes/table-activities.png)
+
+Objetivo:
+
+Generar una tabla que contenga el campo común, en este ejemplo el campo común es 'id_sector'
+
+SINTAXIS
+
+> `SELECT * FROM activities NATURAL JOIN sectors;`
+
+RESULTADO
+
+![natura-join](./Imagenes/natural-join.png)
+
+[☝️](#contenido)
+
+---
+
+> ### Combinación Externa (OUTER JOIN)
+>
+> Mediante esta operación no se requiere que un registro en una tabla tenga un registro relacionado en la otra tabla. El registro es mantenido en la tabla combinada aunque no exista el correspondiente en la otra tabla.
+>
+> Existen tres tipos de combinaciones externas, el Left Join, el Right Join y el Full Join, donde se toman todos los registros de la tabla de la izquierda, o todos los de la tabla derecha, o todos los registros respectivamente.
+>
+> Fuente [Wikedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
+
+> LEFT JOIN
+>
+> El resultado de esta operación siempre contiene todos los registros de la tabla de la izquierda (la primera tabla que se menciona en la consulta), mas los elementos communes de la tabla de derecha.
+>
+> retorna un valor nulo **NULL** en los campos de la tabla derecha cuando no haya correspondencia.
+>
+> <img src="./Imagenes/SQL_Join_-_01b_A_Left_Join_B.svg.png" style="width:300px">
+>
+> Fuente [Wikedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
+
+**_Ejemplo 36 :_**
+
+Para este ejemplo se ha insertado un nuevo registro en la tabla sectors (LEFT) el 'id*sector = 04' (\_generado automaticamente a través de AUTO_INCREMENT*).
+
+> `INSERT INTO sectors (cod_sector, sector) VALUES ('03','fish');`
+
+Tenemos entonces las tablas:
+
+TABLE LEFT 'sectors'
+
+![sectors-left](./Imagenes/sectors-left.png)
+
+TABLE RIGHT 'activities'
+
+![activities-right](./Imagenes/activities-right.png)
+
+Mientras tanto en la tabla activities no existe un registro asociado al 'id_sector = 04'
+
+Objetivo:
+
+Mostrar todos los registros de la tabla LEFT (sectors) que tengan o no registros relacionadados con la tabla RIGHT (activities)
+
+SINTAXIS
+
+`SELECT * FROM sectors LEFT JOIN activities ON sectors.id_sector = activities.id_sector;`
+
+RESULTADO
+
+![sectors-left-query](./Imagenes/sectors-left-query.png)
+
+> [!👀]
+>
+> Notese que como la consulta trae todos los registros de la tabla LEFT (_sectors_), muestra también el 'id*sector = 4' en **NULL** que no tiene registros en la tabla RIGHT (\_activities*)
+
+**_LEFT JOIN excluyendo la intersección_**
+
+> **_LEFT JOIN excluyendo la intersección_**
+>
+> <img src="./Imagenes/SQL_Join_-_02_A_Left_Join_B_Where_B.key_%3D_null.svg.png" style="width:300px;">
+>
+> Si se quieren mostrar solo los registros de la primera tabla que no tengan correspondientes en la segunda, se puede agregar la condición adecuada en la cláusula WHERE.
+> Fuente [Wikedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
+
+**_Ejemplo 37 :_**
+
+Del ejemplo #36 podemos cambiar el resultado para que muestre el sector que no esta asociado a ninguna actividad.
+
+SINTAXIS
+
+> `SELECT * FROM sectors LEFT OUTER JOIN activities ON sectors.id_sector = activities.id_sector  WHERE activities.id_sector IS NULL;`
+
+RESULTADO
+
+![left-outer-join](./Imagenes/left-outer-join.png)
+
+[☝️](#contenido)
+
+---
+
+### RIGHT OUTER JOIN - RIGHT JOIN
+
+Muestra todos los registros de la tabla de la derecha, independientemente de si existe o no un registro correspondiente en la tabla de la izquierda.
+
+> La sentencia **RIGHT OUTER JOIN** retorna todos los valores de la tabla de la derecha con los valores de la tabla de la izquierda correspondientes, si los hay, o retorna un valor nulo **NULL** en los campos de la tabla izquierda cuando no haya correspondencia.
+
+<img src="./Imagenes/SQL_Join_-_03b_A_Right_Join_B.svg.png" style="width:300px;">
+
+**_Ejemplo 38 :_**
+
+Tenemos las tablas:
+
+TABLE LEFT sectors
+
+![sectors-left](./Imagenes/sectors-left.png)
+
+TABLE RIGHT activities
+
+![activities-right](./Imagenes/activities-right.png)
+
+Objetivo:
+
+Retornar todos los valores de la tabla de la derecha (_activities_) con los valores de la tabla de la izquierda correspondientes, si los hay, o retornar un valor nulo **NULL** en los campos de la tabla izquierda (_sectors_) cuando no haya correspondencia.
+
+SINTAXIS
+
+> `SELECT * FROM activities RIGHT OUTER JOIN sectors ON activities.id_sector = sectors.id_sector;`
+
+RESULTADO
+
+![right-outer-join-query](./Imagenes/right-outer-join-query.png)
+
+**_RIGHT JOIN excluyendo la intersección_**
+
+Permite mostrar solo los registros de la tabla LEFT (_sectors_) que no tengan correspondientes en la tabla RIGHT (activities). Se puede agregar la condición adecuada en la cláusula WHERE.
+
+SINTAXIS
+
+> `SELECT * FROM activities RIGHT OUTER JOIN sectors ON activities.id_sector = sectors.id_sector WHERE activities.id_sector IS NULL;`
+
+RESULTADO
+
+![right-outer-join](./Imagenes/right-outer-join.png)
+
+**_Combinación completa (FULL OUTER JOIN)_**
+
+<img src="./Imagenes/SQL_Join_-_05b_A_Full_Join_B.svg.png" style="width:300px;">
+
+Esta operación presenta los resultados de la tabla de la izquierda y tabla de la derecha aunque alguna no tegan correspondencia en la otra tabla.
+
+**_Ejemplo 39 :_**
+
+Tenemos las tablas:
+
+TABLE LEFT (_sectors_)
+
+![sectors-left](./Imagenes/sectors-left.png)
+
+TABLE RIGHT (_activities_)
+
+![activities-right](./Imagenes/activities1-right.png)
+
+Objetivo:
+
+Mostrar los registros de ambas tablas relacionadas al campo común 'id_sector' tengan o no correspondencia los registros.
+
+SINTAXIS
+
+`SELECT * FROM sectors FULL OUTER JOIN activities ON sectors.id_sector = activities.id_sector`;
+
+> [!👀]
+>
+> En MySQL, no hay una cláusula FULL OUTER JOIN directamente. Sin embargo, puedes simularlo combinando un LEFT JOIN y un RIGHT JOIN.
+
+> `SELECT *`
+>
+> `FROM sectors`
+>
+> `LEFT JOIN activities ON sectors.id_sector = activities.id_sector`
+>
+> `UNION`
+>
+> `SELECT * FROM sectors`
+>
+> `RIGHT JOIN activities ON sectors.id_sector = activities.id_sector`
+>
+> `WHERE sectors.id_sector IS NULL;`
+
+En este ejemplo, **sectors** y **activities** son las tablas que deseas combinar en un **FULL OUTER JOIN**. La condición de combinación (sectors.id_sector = activities.id_sector) puede ser reemplazada por la condición adecuada para tu caso.
+
+El primer SELECT utiliza un LEFT JOIN para combinar las filas de la tabla **sectors** con las filas correspondientes de tabla **activities**. El UNION se utiliza para combinar los resultados del primer SELECT con el segundo SELECT.
+
+El segundo SELECT utiliza un RIGHT JOIN para combinar las filas de tabla **activities** con las filas correspondientes de tabla **sectors**. La cláusula **WHERE sectors.id_sector IS NULL** se utiliza para seleccionar solo las filas que no coinciden con la tabla **sectors**.
+
+El resultado final será un conjunto de resultados que simula un FULL OUTER JOIN entre la tabla **sectors** y **activities**.
+
+RESULTADO
+
+![full-outer-join](./Imagenes/full-outer-join.png)
+
+**_FULL JOIN excluyendo la intersección_**
+
+Se muestran solo los registros de la tabla que no tenan correspondencia en la otra.
+
+<img src="./Imagenes/SQL_Join_-_06b_A_Full_Join_B_Where_A.key_%3D_null_Or_B.key_%3D_null.svg.png" style="width:300px;">
+
+SINTAXIS
+
+_SIMULACIÓN DE UN FULL JOIN excluyendo la intersección EN MySQL_
+
+> `SELECT`
+>
+> `*`
+>
+> `FROM sectors`
+>
+> `LEFT JOIN activities ON sectors.id_sector = activities.id_sector`
+>
+> `WHERE activities.id_sector IS NULL`
+>
+> `UNION`
+>
+> `SELECT * FROM sectors`
+>
+> `RIGHT JOIN activities ON sectors.id_sector = activities.id_sector`
+>
+> `WHERE sectors.id_sector IS NULL;`
+
+RESULTADO
+
+![full-join-excl-interseccion](./Imagenes/full-join-excl-interseccion.png)
 
 [☝️](#contenido)
 
