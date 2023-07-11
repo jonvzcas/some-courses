@@ -46,6 +46,8 @@
    - [Combinación Interna (INNER JOIN)](#combinación-interna-inner-join)
    - [Combinación Externa (OUTER JOIN)](#combinación-externa-outer-join)
    - [RIGHT OUTER JOIN - RIGHT JOIN](#right-outer-join---right-join)
+1. [VISTA](#vista)
+1. [MOTORES DE BASES DE DATOS](#motores-de-bases-de-datos)
 
 ## TIPOS DE SENTENCIAS EN SQL
 
@@ -1067,13 +1069,55 @@ RESULTADO
 
 ![excl_legal_form](./Imagenes/excl_legal_form.png)
 
+**_Ejemplo 34 :_**
+
+CONSULTANDO CAMPOS INDIRECTAMENTE A TRAVÉS DE DOS TABLAS RELACIONADAS
+
+En este ejemplo tenemos tres tablas:
+
+TABLE companies:
+
+![table-companies](./Imagenes/estructure-companies.png)
+
+TABLE activities:
+
+![table-activities](./Imagenes/describe-activities.png)
+
+TABLE cities:
+
+![table-cities](./Imagenes/describe-cities.png)
+
+> [!👀]
+>
+> Hay algo interesante aquí, y es que en la siguiente consulta se pueden invocar datos de campo indirectamente relacionados. Por ejemplo si nos fijamos en la tabla 'companies' esta relacionada con la tabla 'activities' a través de la foreing key 'id_activity', sin embargo la tabla 'companies' no tiene como tal el campo 'activity', por otro lado tampoco tiene el campo 'city' pero si tiene el campo id_city.
+
+Objetivo:
+
+combinar las tres tablas a través y mandar a llamar los campos (_activity, city_) a través de las foreing key en la tabla companies.
+
+SINTAXIS
+
+`SELECT companies.name, a.activity, c.city`
+
+`FROM companies`
+
+`INNER JOIN activities a ON companies.id_activity = a.id_activity`
+
+`INNER JOIN cities c ON companies.id_city = c.id_city;`
+
+RESULTADO
+
+![INNER-JOIN](./Imagenes/inner-join1.png)
+
+Podemos ver que el INNER JOIN es una herramienta muy útil a la hora de arrastrar campos con las tablas con las cuales hay relación.
+
 > **_Theta Join_**
 >
 > A la combinación que utiliza comparaciones dentro del predicado _JOIN_ se llama theta-join. Se pueden hacer comparaciones de <, <=, =, <>, >=, y >.
 >
 > Fuente [Wikedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
 
-**_Ejemplo 34 :_**
+**_Ejemplo 35 :_**
 
 Tenemos las tablas:
 
@@ -1109,7 +1153,7 @@ Podemos observar las ciudades en donde hay empresas con un capital inferior a $1
 >
 > Fuente [Wikedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
 
-**_Ejemplo 35 :_**
+**_Ejemplo 36 :_**
 
 Tenemos las tablas:
 
@@ -1155,7 +1199,7 @@ RESULTADO
 >
 > Fuente [Wikedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
 
-**_Ejemplo 36 :_**
+**_Ejemplo 37 :_**
 
 Para este ejemplo se ha insertado un nuevo registro en la tabla sectors (LEFT) el 'id*sector = 04' (\_generado automaticamente a través de AUTO_INCREMENT*).
 
@@ -1198,7 +1242,7 @@ RESULTADO
 > Si se quieren mostrar solo los registros de la primera tabla que no tengan correspondientes en la segunda, se puede agregar la condición adecuada en la cláusula WHERE.
 > Fuente [Wikedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
 
-**_Ejemplo 37 :_**
+**_Ejemplo 38 :_**
 
 Del ejemplo #36 podemos cambiar el resultado para que muestre el sector que no esta asociado a ninguna actividad.
 
@@ -1222,7 +1266,7 @@ Muestra todos los registros de la tabla de la derecha, independientemente de si 
 
 <img src="./Imagenes/SQL_Join_-_03b_A_Right_Join_B.svg.png" style="width:300px;">
 
-**_Ejemplo 38 :_**
+**_Ejemplo 39 :_**
 
 Tenemos las tablas:
 
@@ -1264,7 +1308,7 @@ RESULTADO
 
 Esta operación presenta los resultados de la tabla de la izquierda y tabla de la derecha aunque alguna no tegan correspondencia en la otra tabla.
 
-**_Ejemplo 39 :_**
+**_Ejemplo 40 :_**
 
 Tenemos las tablas:
 
@@ -1349,6 +1393,110 @@ RESULTADO
 [☝️](#contenido)
 
 ---
+
+## VISTA
+
+Es una tabla virtual que se deriva de una o varias tablas existenten en la base de datos.
+
+Las vistas se utilizan para simplificar las consultas complejas, ocultar los detalles de implementación y proporcionar una capa adicional de seguridad.
+
+Para crear una vista en SQL, se utiliza la instrucción CREATE VIEW seguida del nombre de la vista y la definición de la consulta.
+
+**_Ejemplo 41 :_**
+
+SINTAXIS
+
+`CREATE VIEW ejemplo_vista AS SELECT companies.name, a.activity, c.city`
+
+`FROM companies`
+
+`INNER JOIN activities a ON companies.id_activity = a.id_activity`
+
+`INNER JOIN cities c ON companies.id_city = c.id_city;`
+
+RESULTADO
+
+![view](./Imagenes/view.png)
+
+Una vez creada la vista, se puede utilizar como si fuera una tabla normal en consultas SELECT, INSERT, UPDATE o DELETE. Aquí hay un ejemplo de cómo utilizar la vista creada anteriormente:
+
+`SELECT * FROM ejemplo_vista;`
+
+![view1](./Imagenes/view1.png)
+
+Es importante tener en cuenta que una vista no contiene datos físicos en sí misma, sino que almacena la consulta que define la vista. Cada vez que se hace referencia a la vista, se ejecuta la consulta y se devuelve el resultado actualizado.
+
+Además, las vistas pueden tener restricciones y se pueden actualizar siempre que cumplan ciertos criterios. Sin embargo, las vistas no son adecuadas para todas las situaciones, ya que pueden tener un impacto en el rendimiento si se utilizan en consultas complejas o con grandes volúmenes de datos.
+
+ELIMINAR UNA VISTA
+
+`DROP VIEW ejemplo_vista`
+
+MOSTRAR LAS VISTAS
+
+`SHOW FULL TABLES IN business_directory WHERE TABLE_TYPE LIKE 'VIEW';`
+
+![show-view](./Imagenes/show-view.png)
+
+[☝️](#contenido)
+
+---
+
+## MOTORES DE BASES DE DATOS
+
+### Especificar el ENGINE de las tablas
+
+El ENGINE se pone cuando la versión del motor de base de datos en MySQL es menor o igual a 5.5. MyISAM era motor de almacenamiento prodeterminado.
+
+    CREATE TABLE departments (
+      id_department INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      cod_dane_dep CHAR(2) UNIQUE,
+      department VARCHAR(30) UNIQUE
+    ) ENGINE=MyISAM;
+
+`DROP TABLE departments;`
+
+    CREATE TABLE departments (
+      id_department INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      cod_dane_dep CHAR(2) UNIQUE,
+      department VARCHAR(30) UNIQUE
+    ) ENGINE=InnoDB;
+
+**Diferencias :**
+
+Transacciones: InnoDB es un motor de almacenamiento transaccional que admite el concepto de transacciones, lo que permite combinar múltiples operaciones en una unidad atómica. Esto garantiza la consistencia de los datos y permite la recuperación en caso de fallos. Por otro lado, MyISAM no es transaccional y no soporta transacciones.
+
+Bloqueo de nivel de fila: InnoDB utiliza un mecanismo de bloqueo de nivel de fila para gestionar el acceso concurrente a los datos. Esto permite que varias transacciones accedan a diferentes filas de una tabla simultáneamente sin bloquear toda la tabla. En cambio, MyISAM utiliza un mecanismo de bloqueo de nivel de tabla, lo que significa que cuando una transacción realiza una operación en una tabla, bloquea toda la tabla, lo que puede causar bloqueos y afectar el rendimiento en entornos de alta concurrencia.
+
+Integridad referencial: InnoDB admite las restricciones de integridad referencial, como las claves foráneas, que garantizan que los datos relacionados entre tablas se mantengan consistentes. MyISAM no admite restricciones de integridad referencial y no garantiza la consistencia de los datos relacionados automáticamente.
+
+Recuperación ante fallos: InnoDB es capaz de recuperarse de manera más confiable ante fallos debido a su soporte de transacciones y su registro de transacciones. Puede realizar una recuperación automática en caso de un fallo del sistema o un corte de energía. Por otro lado, MyISAM no tiene un registro de transacciones y la recuperación puede ser más difícil y propensa a errores en caso de fallos.
+
+Rendimiento en consultas de lectura y escritura: En general, InnoDB tiende a ser más rápido en consultas que involucran escritura y lectura simultáneas debido a su gestión de bloqueo de nivel de fila y optimizaciones internas. MyISAM puede tener un mejor rendimiento en consultas de solo lectura, especialmente cuando se trata de tablas estáticas sin actualizaciones frecuentes.
+
+[☝️](#contenido)
+
+---
+
+## JUEGO DE CARÁCTERES EN LA BASE DE DATOS
+
+Unicode (UCA 9.0.0) independientes de acentos, independiente de minúsculas, independiente de mayúsculas.
+
+### Establer el juego de carácteres en la base de datos
+
+    CREATE TABLE departments (
+      id_department INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      cod_dane_dep CHAR(2) UNIQUE,
+      department VARCHAR(30) UNIQUE
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+`DROP TABLE departments;`
+
+    CREATE TABLE departments (
+      id_department INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      cod_dane_dep CHAR(2) UNIQUE,
+      department VARCHAR(30) UNIQUE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ## Ruta de mis scripts
 
