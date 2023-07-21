@@ -2253,11 +2253,3 @@ ELIMINAR UN TRIGGER
 [☝️](#contenido)
 
 ---
-
-## Ruta de mis scripts
-
-/home/jonvzcas/snap/dbeaver-ce/240/.local/share/DBeaverData/workspace6/General/Scripts/
-
-[☝️](#contenido)
-
----
