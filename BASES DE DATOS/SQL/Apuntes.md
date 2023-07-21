@@ -48,6 +48,13 @@
    - [RIGHT OUTER JOIN - RIGHT JOIN](#right-outer-join---right-join)
 1. [VISTA](#vista)
 1. [MOTORES DE BASES DE DATOS](#motores-de-bases-de-datos)
+1. [JUEGO DE CARÁCTERES EN LA BASE DE DATOS](#juego-de-carácteres-en-la-base-de-datos)
+1. [RESTRICCIONES](#restricciones)
+1. [TRANSACCIONES](#transacciones)
+1. [LIMIT](#limit)
+1. [FUNCIONES DE ENCRIPTACION](#transacciones)
+1. [PROCEDIMIENTOS ALMACENADOS](#procedimientos-almacenados)
+1. [DISPARADORES](#disparadores-triggers)
 
 ## TIPOS DE SENTENCIAS EN SQL
 
@@ -1097,13 +1104,10 @@ combinar las tres tablas a través y mandar a llamar los campos (_activity, city
 
 SINTAXIS
 
-`SELECT companies.name, a.activity, c.city`
-
-`FROM companies`
-
-`INNER JOIN activities a ON companies.id_activity = a.id_activity`
-
-`INNER JOIN cities c ON companies.id_city = c.id_city;`
+    SELECT companies.name, a.activity, c.city
+    FROM companies
+    INNER JOIN activities a ON companies.id_activity = a.id_activity
+    INNER JOIN cities c ON companies.id_city = c.id_city;
 
 RESULTADO
 
@@ -1135,11 +1139,9 @@ Consultar las ciudades en donde hay empresas empresas con capital inferior a $13
 
 SINTAXIS
 
-> `SELECT cities.id_city,companies.name, companies.company_value`
->
-> `FROM cities JOIN companies`
->
-> `ON cities.city = companies.id_city AND > companies.company_value < 130000000;`
+    SELECT cities.id_city,companies.name, companies.company_value
+    FROM cities JOIN companies
+    ON cities.city = companies.id_city AND > companies.company_value < 130000000;
 
 RESULTADO
 
@@ -1248,7 +1250,7 @@ Del ejemplo #36 podemos cambiar el resultado para que muestre el sector que no e
 
 SINTAXIS
 
-> `SELECT * FROM sectors LEFT OUTER JOIN activities ON sectors.id_sector = activities.id_sector  WHERE activities.id_sector IS NULL;`
+    SELECT * FROM sectors LEFT OUTER JOIN activities ON sectors.id_sector = activities.id_sector  WHERE activities.id_sector IS NULL;
 
 RESULTADO
 
@@ -1284,7 +1286,7 @@ Retornar todos los valores de la tabla de la derecha (_activities_) con los valo
 
 SINTAXIS
 
-> `SELECT * FROM activities RIGHT OUTER JOIN sectors ON activities.id_sector = sectors.id_sector;`
+    SELECT * FROM activities RIGHT OUTER JOIN sectors ON activities.id_sector = sectors.id_sector;
 
 RESULTADO
 
@@ -1296,7 +1298,10 @@ Permite mostrar solo los registros de la tabla LEFT (_sectors_) que no tengan co
 
 SINTAXIS
 
-> `SELECT * FROM activities RIGHT OUTER JOIN sectors ON activities.id_sector = sectors.id_sector WHERE activities.id_sector IS NULL;`
+    SELECT
+    *
+    FROM activities
+    RIGHT OUTER JOIN sectors ON activities.id_sector = sectors.id_sector WHERE activities.id_sector IS NULL;
 
 RESULTADO
 
@@ -1332,19 +1337,13 @@ SINTAXIS
 >
 > En MySQL, no hay una cláusula FULL OUTER JOIN directamente. Sin embargo, puedes simularlo combinando un LEFT JOIN y un RIGHT JOIN.
 
-> `SELECT *`
->
-> `FROM sectors`
->
-> `LEFT JOIN activities ON sectors.id_sector = activities.id_sector`
->
-> `UNION`
->
-> `SELECT * FROM sectors`
->
-> `RIGHT JOIN activities ON sectors.id_sector = activities.id_sector`
->
-> `WHERE sectors.id_sector IS NULL;`
+    SELECT *
+    FROM sectors
+    LEFT JOIN activities ON sectors.id_sector = activities.id_sector
+    UNION
+    SELECT * FROM sectors
+    RIGHT JOIN activities ON sectors.id_sector = activities.id_sector
+    WHERE sectors.id_sector IS NULL;
 
 En este ejemplo, **sectors** y **activities** son las tablas que deseas combinar en un **FULL OUTER JOIN**. La condición de combinación (sectors.id_sector = activities.id_sector) puede ser reemplazada por la condición adecuada para tu caso.
 
@@ -1368,23 +1367,15 @@ SINTAXIS
 
 _SIMULACIÓN DE UN FULL JOIN excluyendo la intersección EN MySQL_
 
-> `SELECT`
->
-> `*`
->
-> `FROM sectors`
->
-> `LEFT JOIN activities ON sectors.id_sector = activities.id_sector`
->
-> `WHERE activities.id_sector IS NULL`
->
-> `UNION`
->
-> `SELECT * FROM sectors`
->
-> `RIGHT JOIN activities ON sectors.id_sector = activities.id_sector`
->
-> `WHERE sectors.id_sector IS NULL;`
+    SELECT
+    *
+    FROM sectors
+    LEFT JOIN activities ON sectors.id_sector = activities.id_sector
+    WHERE activities.id_sector IS NULL
+    UNION
+    SELECT * FROM sectors
+    RIGHT JOIN activities ON sectors.id_sector = activities.id_sector
+    WHERE sectors.id_sector IS NULL;
 
 RESULTADO
 
@@ -1406,13 +1397,13 @@ Para crear una vista en SQL, se utiliza la instrucción CREATE VIEW seguida del 
 
 SINTAXIS
 
-`CREATE VIEW ejemplo_vista AS SELECT companies.name, a.activity, c.city`
+    CREATE VIEW ejemplo_vista AS SELECT companies.name, a.activity, c.city
 
-`FROM companies`
+    FROM companies
 
-`INNER JOIN activities a ON companies.id_activity = a.id_activity`
+    INNER JOIN activities a ON companies.id_activity = a.id_activity
 
-`INNER JOIN cities c ON companies.id_city = c.id_city;`
+    INNER JOIN cities c ON companies.id_city = c.id_city;
 
 RESULTADO
 
@@ -1497,6 +1488,771 @@ Unicode (UCA 9.0.0) independientes de acentos, independiente de minúsculas, ind
       cod_dane_dep CHAR(2) UNIQUE,
       department VARCHAR(30) UNIQUE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+[☝️](#contenido)
+
+---
+
+## RESTRICCIONES
+
+- CASCADE
+
+  Cuando se establece la restricción CASCADE en una relación de clave externa, cualquier actualización o eliminación realizada en la tabla principal (tabla referenciada) se propagará automáticamente a las tablas secundarias (tablas que contienen la clave externa). Por ejemplo, si se elimina una fila de la tabla principal, todas las filas correspondientes en las tablas secundarias también se eliminarán automáticamente.
+
+- SET NULL
+
+  Al establecer la restricción SET NULL, si se actualiza o elimina una fila en la tabla principal, los valores de la clave externa en las tablas secundarias se establecerán en NULL. Esto implica que las filas en las tablas secundarias quedarán "huérfanas" sin una referencia válida a la tabla principal.
+
+- SET DEFAULT
+
+  Esta restricción permite establecer un valor predeterminado en las claves externas de las tablas secundarias cuando se actualiza o elimina una fila en la tabla principal. De esta manera, en lugar de establecer el valor en NULL, se establecerá en un valor predeterminado definido anteriormente.
+
+- RESTRICT
+
+  Con esta restricción, se impide cualquier operación de actualización o eliminación en la tabla principal si existen registros relacionados en las tablas secundarias. En otras palabras, RESTRICT actúa como una restricción de integridad referencial y evita acciones que puedan dejar inconsistencias en los datos.
+
+### CASOS PRACTICOS
+
+---
+
+CASO 1 (_RESTRICT_)
+
+**Tenemos las tablas**
+
+TABLE companies (_Tabla principal_)
+
+![first-table](./Imagenes/first-table.png)
+
+TABLE activities (_Tabla secundaria_)
+
+![second-table](./Imagenes/companies-second.png)
+
+Intentare eliminar la actividad con id = 9
+
+![delete-row-second-table](./Imagenes/delete-row-second-table.png)
+
+El mensaje avisa que no se puede eliminar o actualizar la fila debido a que ese registro (id_activity = 9) hace parte de un campo que es llave foranea en la tabla companies. **La tabla principal companies es dependiente de ese registro.**
+
+Ahora voy a intentar eliminar la actividad con id = 11 en la tabla activities.
+
+![delete-row-second-table](./Imagenes/delete1-restriction-second-table.png)
+
+**_Sucede lo mismo al intentar hacer un UPDATE de un registro que hace parte de una llave foránea en la tabla principal_**
+
+![update-companies](./Imagenes/update-activities.png)
+
+Notemos que este registro si se dejo eliminar ya que en la tabla companies no había un registro con un id_activity = 11. **La tabla principal companies no era dependiente de ese registro.**
+
+---
+
+- CASO 2 (_CASCADE_)
+
+Actualizar los registros en la tabla principal desde la tabla secundaria.
+
+> [!👀]
+>
+> Ten cuidado al eliminar tus tablas, esto solo se esta haciendo para fines de mostrar un ejemplo.
+
+<br>
+
+Eliminando la tabla principal
+
+![drop-main-table](./Imagenes/drop-main-table.png)
+
+<br>
+
+Eliminando la tabla secundaria
+
+![drop-second-table](./Imagenes/drop-second-table.png)
+
+<br>
+
+Creamos de nuevo la tabla secundaria
+
+    CREATE TABLE activities (
+      id_activity INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      cod_activity CHAR(4) UNIQUE,
+      activity VARCHAR(50) UNIQUE
+    );
+
+<br>
+
+Insertamos registros en la tabla secundaria
+
+    INSERT INTO activities (cod_activity, activity) VALUES
+      ('471','retail trade in non-specialized stores'),
+      ('0112','rice cultivation'),
+      ('0114','tabaco cultivation'),
+      ('411','building construction'),
+      ('4775','retail trade of second-hand items'),
+      ('0123','coffe growing'),
+      ('478','retail trade in mobile sales points'),
+      ('4111','construction of residencials buildings'),
+      ('4112','construction of non-residential buildings');
+
+![activities1](./Imagenes/activities1.png)
+
+<br>
+
+Creamos la tabla principal añadiendo un RESTRICT para DELETE y un UPDATE en CASCADE para los registros pertenecientes a la llave foránea.
+
+    CREATE TABLE companies (
+      id_company INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(40) UNIQUE,
+      id_activity INT UNSIGNED,
+      FOREIGN KEY (id_activity) REFERENCES activities(id_activity)
+      ON DELETE RESTRICT ON UPDATE CASCADE
+    );
+
+<br>
+
+Insertamos registros en la tabla primaria
+
+    INSERT INTO companies (name,id_activity) VALUES
+      ('TAR-get',4),
+      ('XYZ',4),
+      ('Almacen Pacifico',3),
+      ('Constructora Asprilla',1),
+      ('Comercializadora ABC',2),
+      ('Bennet Company',4),
+      ('Bytes Colombia',1),
+      ('Cafe Horizonte',3),
+      ('Salud Tabaco',2),
+      ('Constructora ABC',1),
+      ('Arroz del Valle',3),
+      ('Design Soft',1);
+
+![companies1](./Imagenes/companies1.png)
+
+<br>
+
+Intentando eliminar un registro en la tabla secundaria para comprobar la restricción DELETE
+
+![delete-activities](./Imagenes/delete-act.png)
+
+Ahora intentemos hacer un UPDATE desde la tabla secundaria para comprobar la CASCADA
+
+![update-cascade](./Imagenes/update-cascade.png)
+
+La actualización fue aplicada correctamente en todos los registros con la condición id_activity = 4 en la tabla principal. Ahora es id_activity = 15
+
+![select-cascade](./Imagenes/select-cascade.png)
+
+La tabla secundaria también cambio desplazando el id_activity = 4 como id_activity = 15
+
+![change-id](./Imagenes/change-id.png)
+
+🫶 _Ahora le encontramos sentido a la integridad referencial._
+
+- CASO 3 (_SET NULL_)
+
+Poner por defecto el valor NULL en el registro de llave foránea cuando se elimina de la tabla secundaria 'activities'.
+
+> [!👀]
+>
+> Ten cuidado al eliminar tus tablas, esto solo se esta haciendo para fines de mostrar un ejemplo.
+
+<br>
+
+Eliminando la tabla principal
+
+![drop-main-table](./Imagenes/drop-main-table.png)
+
+<br>
+
+Eliminando la tabla secundaria
+
+![drop-second-table](./Imagenes/drop-second-table.png)
+
+<br>
+
+Creamos de nuevo la tabla secundaria
+
+    CREATE TABLE activities (
+      id_activity INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      cod_activity CHAR(4) UNIQUE,
+      activity VARCHAR(50) UNIQUE
+    );
+
+<br>
+
+Insertamos registros en la tabla secundaria
+
+    INSERT INTO activities (cod_activity, activity) VALUES
+      ('471','retail trade in non-specialized stores'),
+      ('0112','rice cultivation'),
+      ('0114','tabaco cultivation'),
+      ('411','building construction'),
+      ('4775','retail trade of second-hand items'),
+      ('0123','coffe growing'),
+      ('478','retail trade in mobile sales points'),
+      ('4111','construction of residencials buildings'),
+      ('4112','construction of non-residential buildings');
+
+![activities1](./Imagenes/activities1.png)
+
+<br>
+
+Creamos la tabla principal 'companies' añadiendo **SET NULL para DELETE** y un UPDATE en CASCADE para los registros pertenecientes a la llave foránea.
+
+    CREATE TABLE companies (
+      id_company INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(40) UNIQUE,
+      id_activity INT UNSIGNED,
+      FOREIGN KEY (id_activity) REFERENCES activities(id_activity)
+      ON DELETE SET NULL ON UPDATE CASCADE
+    );
+
+<br>
+
+Insertamos registros en la tabla primaria
+
+    INSERT INTO companies (name,id_activity) VALUES
+      ('TAR-get',4),
+      ('XYZ',4),
+      ('Almacen Pacifico',3),
+      ('Constructora Asprilla',1),
+      ('Comercializadora ABC',2),
+      ('Bennet Company',4),
+      ('Bytes Colombia',1),
+      ('Cafe Horizonte',3),
+      ('Salud Tabaco',2),
+      ('Constructora ABC',1),
+      ('Arroz del Valle',3),
+      ('Design Soft',1);
+
+![companies1](./Imagenes/companies1.png)
+
+<br>
+
+Ahora veamos los registros combinando ambas tablas:
+
+    SELECT id_company, name, a.cod_activity, a.activity
+      FROM companies
+      INNER JOIN activities a
+      ON companies.id_activity = a.id_activity;
+
+![inner-join-companies-activities](./Imagenes/inner-join-companies-activities.png)
+
+<br>
+
+COMPROBANDO SET NULL
+
+Para este caso, vamos a eliminar la id_activity = 3 que corresponde 'tabaco cultivation'
+
+Vamos a ver como queda el SELECT anterior eliminando el id_activity = 3
+
+`DELETE FROM activities WHERE id_activity = 3;`
+
+Al ser el INNER JOIN una intercepción entre las dos tablas, los registros eliminados de la tabla 'activities' ya no aparecen en la consulta.
+
+![delete-id4-on-activities](./Imagenes/delete-id3-view-companies.png)
+
+Sin embargo si hacemos un SELECT solo de la tabla 'companies' vemos que los registros eliminados de la tabla 'activities' y que aparecian en 'companies' ahora son NULL.
+
+![companies-null](./Imagenes/companies-null.png)
+
+[☝️](#contenido)
+
+---
+
+## TRANSACCIONES
+
+se refiere a una secuencia de operaciones o acciones que se ejecutan como una unidad atómica e indivisible. Estas operaciones pueden incluir inserciones, actualizaciones, eliminaciones u otras acciones que modifican los datos almacenados en la base de datos.
+
+Una transacción debe cumplir con las siguientes propiedades, conocidas como las propiedades ACID:
+
+### Atomicidad (Atomicity):
+
+La atomicidad asegura que una transacción se considere como una operación única e indivisible. Esto significa que todas las acciones dentro de la transacción se ejecutan en su totalidad o ninguna de ellas. Si una parte de la transacción falla, se deshacen todas las acciones previas (rollback) para mantener la consistencia de los datos.
+
+### Consistencia (Consistency):
+
+La consistencia garantiza que una transacción lleve la base de datos desde un estado válido a otro estado válido. Las reglas y restricciones de integridad de la base de datos deben cumplirse antes y después de la transacción.
+
+### Aislamiento (Isolation):
+
+El aislamiento asegura que cada transacción se ejecute en un ambiente aislado de otras transacciones concurrentes. Esto evita que los cambios realizados por una transacción interfieran o afecten a otras transacciones que están ocurriendo al mismo tiempo.
+
+### Durabilidad (Durability):
+
+La durabilidad garantiza que una vez que una transacción se ha completado correctamente y se ha confirmado, los cambios realizados en la base de datos persistirán incluso en caso de fallos del sistema, como cortes de energía o reinicios.
+
+**_Ejemplo 42 :_**
+
+MOMENTOS DE LA TRANSACCION
+
+---
+
+Inicio de la transacción  
+`START TRANSACTION;`
+![transccion-momento1](./Imagenes/transc-1.png)
+<br>
+
+Actualizando un registro  
+`UPDATE activities SET cod_activity = '0122' WHERE cod_activity = '0112';`
+![transccion-momento2](./Imagenes/transc-2.png)
+<br>
+
+Eliminando todos los registros de la tabla  
+`DELETE FROM activities;`
+![transccion-momento3](./Imagenes/transc-3.png)
+<br>
+
+Insertando un nuevo registro a la tabla  
+`INSERT INTO activities VALUES (10,'0615', 'support technology');`
+![transccion-momento4](./Imagenes/transc-4.png)
+<br>
+
+> [!👀]
+>
+> El ROLLBACK
+>
+> _Si ejecutamos la linea de ROLLBACK el estado de las tablas vuelve justo antes de iniciar la transacción._
+
+Ejecutando el ROLLBACK  
+`ROLLBACK;`  
+![transccion-momento5](./Imagenes/transc-5.png)
+<br>
+
+Verificando que la tabla 'activities' haya regresado antes de la transacción.  
+`SELECT * FROM activities;`  
+![transccion-momento6](./Imagenes/transc-6.png)
+<br>
+
+Si no hubiesemos reversado la transacción con el ROLLBACK, para concluir la transacción, es decir guardar los cambios de las sentencias, se ejecuta la siguinte linea:  
+`COMMIT;`
+
+[☝️](#contenido)
+
+---
+
+## LIMIT
+
+Permite mostrar los registros en bloques.
+
+**_Ejemplo 43 :_**
+
+Vamos a utilizar nuevamente la tabla 'activities'
+
+Verifiquemos primero algo... En la parte inferior derecha aparece que pueden mostrarse hasta un bloque total de 200 registros.
+
+![activities-limit](./Imagenes/activities-limit.png)
+
+En este ejemplo vamos a limitar la paginación a bloques de 3 registros
+
+SINTAXIS
+
+`SELECT * FROM activities LIMIT 3;`
+
+RESULTADO
+
+![activities-limit3](./Imagenes/activities-limit3.png)
+
+Hay otra manera de seccionar los bloques y es eligiendo el punto de partida de donde se quieren empezar a mostrar los bloques de registros. Por ejemplo vamos a mostrar registro a partir del la cuarta fila hasta la 6 fila.
+
+Esta seria la sintaxis:
+
+`SELECT * FROM activities LIMIT 3,3;`
+
+![companies-limit-rango](./Imagenes/activities-limit3-3.png)
+
+[☝️](#contenido)
+
+---
+
+## FUNCIONES DE ENCRIPTACION
+
+**Buenas prácticas** ✔️
+
+Casos de uso: encriptación de password o claves.
+
+### Función MD5
+
+Convierte una cadena de texto a un valor de tipo hash de 128 bits.
+
+SINTAXIS
+
+`SELECT MD5('m1 pA$$w0rd');`
+
+![md5](./Imagenes/md5.png)
+
+### Función SHA1
+
+Tambien va a generar un valor de hash de hasta 160 bits.
+
+SINTAXIS
+
+`SELECT SHA1('m1 pA$$w0rd');`
+
+![sha1](./Imagenes/sha1.png)
+
+### Función SHA2
+
+Permite indicar el número de bits que va a formar el sha.
+
+SINTAXIS
+
+`SELECT SHA2('m1 pA$$w0rd', 256);`
+
+### Función AES_ENCRYPT
+
+Funciona como un factor de doble autenticación.
+Utiliza una llave secreta.
+
+`SELECT AES_ENCRYPT('m1 pA$$w0rd', 'llave_secreta');`
+
+![aes_encrypt](./Imagenes/aes_encrypt.png)
+
+**D E S E N C R I P T A R**
+
+Se reciben dos parámetros:
+
+1. El campo donde se va a desencriptar
+1. la llave secreta
+
+SINTAXIS
+
+`SELECT AES_DECRYPT(nombre_campo, 'llave_secreta');`
+
+**_Ejemplo 44 :_**
+
+Para datos encriptados se recomienda utilizar el tipo de datos BLOB
+
+Tenemos la siguiente encriptación:
+
+    CREATE TABLE cuentas_de_email(
+      email VARCHAR(30) PRIMARY KEY,
+      name VARCHAR(30) NOT NULL,
+      pwd BLOB
+    );
+
+    INSERT INTO cuentas_de_email VALUES
+      ('jcastillo@tar-get.co','Jonathan', AES_ENCRYPT('pAssword1', 'pina')),
+      ('climactano@tar-get.co','Climaco', AES_ENCRYPT('pAssword1', 'mango')),
+      ('lgrajales@tar-get.co','Lucy', AES_ENCRYPT('pAssword1', 'ciruela')),
+      ('operez@tar-get.co','Oscar', AES_ENCRYPT('pAssword1', 'granadina')),
+      ('bgomez@tar-get.co','Blanca', AES_ENCRYPT('pAssword1', 'banano'));
+
+    SELECT * FROM cuentas_de_email;
+
+![encryp](./Imagenes/encryp.png)
+
+### Casting
+
+Hacemos un casteo, pasamos el tipo de dato de BLOB a CHART.
+
+SINTAXIS
+
+`SELECT CAST(AES_DECRYPT(pwd, 'ciruela') AS CHAR) AS tdc, name FROM cuentas_de_email;`
+
+![casting](./Imagenes/casting-datos.png)
+
+_Observamos que se ha desencriptado el registro con la llave secreta 'ciruela'_
+
+1. En el casteo la funcion AES_DECRYP toma dos parámetros, el primero es el nombre del campo, el segundo la llave secreta.
+1. Dentro del casting se especifica el tipo de dato al que se va a convertir el dato encriptado.
+1. Se especifica el alias del campo.
+
+[☝️](#contenido)
+
+---
+
+## PROCEDIMIENTOS ALMACENADOS
+
+Un procedimiento almacenado es una colección de comandos SQL que se guarda en una base de datos y se ejecuta mediante una única llamada a la base de datos. Estos procedimientos son utilizados para encapsular y ejecutar tareas específicas dentro de la base de datos, lo que ofrece ventajas en términos de seguridad, rendimiento y mantenimiento.
+
+Beneficios de los procedimientos almacenados:
+
+- Rendimiento: Almacenar el código en el servidor de la base de datos reduce la cantidad de datos enviados a través de la red, mejorando el rendimiento en aplicaciones remotas.
+
+- Seguridad: Los procedimientos almacenados pueden tener permisos de acceso asignados, lo que controla quién puede ejecutarlos y qué operaciones pueden realizar.
+
+- Mantenimiento: Al tener el código SQL encapsulado en un procedimiento, los cambios en la lógica de negocio pueden realizarse dentro del procedimiento sin modificar la aplicación que lo invoca.
+
+Los procedimientos almacenados son una herramienta poderosa para interactuar con una base de datos y ofrecen ventajas en términos de seguridad, rendimiento y mantenimiento. Sin embargo, su implementación debe realizarse con cuidado, asegurándose de que cumplan con los estándares y prácticas recomendadas para mantener una base de datos eficiente y segura.
+
+**_Ejemplo 45 :_**
+
+Tomado del curso 'Curso SQL - jonmircha' en YouTube
+https://youtu.be/UAuZvxPTi58?t=25530
+
+SINTAXIS PARA CREACIÓN DE STORE PROCEDURE
+
+> [!👀]
+>
+> Se sugiere ejecutar la creación del store procedure en una nuevo archivo de script para correr la ejecución de todo el bloque
+
+    DELIMITER //
+
+    CREATE PROCEDURE sp_obtener_suscripciones()
+
+      BEGIN
+        SELECT * FROM suscripciones;
+      END //
+
+    DELIMITER ;
+
+INVOCAR AL STORE PROCEDURE
+
+`CALL sp_obtener_suscripciones(); `
+
+![store-procedure](./Imagenes/sp_suscripciones.png)
+
+LISTAR STORE PROCEDURES
+
+`SHOW PROCEDURE STATUS WHERE db = 'curso_sql';`
+
+![show-sp](./Imagenes/show_store_procedure.png)
+
+ELIMINAR UN STORE PROCEDURE
+
+`DROP PROCEDURE sp_obtener_suscripciones;`
+
+## Suscripción a servicio
+
+## **Lógica hipotetica de negocios - ejemplo 45:**
+
+Validar que el correo no existe
+
+- Si no existe hago un INSERT en la tabla de clientes con los datos del cliente.
+- Hago un INSERT a la tabla de tarjetas con la tarjeta del cliente.
+- Hago un INSERT a la tabla de servicios, con la información del cliente, la tarjeta y la suscripción que el usuario haya elegido.
+
+Tabla suscripciones
+
+    CREATE TABLE suscripciones (
+      suscripcion_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      suscripcion VARCHAR(30) NOT NULL,
+      costo DECIMAL(5,2) NOT NULL
+    );
+
+    INSERT INTO suscripciones VALUES
+      (0,'Bronce', 199.99),
+      (0,'Plata', 299.99),
+      (0, 'Oro', 399.99);
+
+Tabla tarjetas
+
+    CREATE TABLE tarjetas (
+      tarjeta_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      cliente INT UNSIGNED,
+      tarjeta BLOB,
+      FOREIGN KEY(cliente)
+        REFERENCES clientes(cliente_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+    );
+
+Tabla servicios
+
+    CREATE TABLE servicios (
+      servicio_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      cliente INT UNSIGNED,
+      tarjeta INT UNSIGNED,
+      suscripcion INT UNSIGNED,
+      FOREIGN KEY(cliente)
+        REFERENCES clientes(cliente_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+      FOREIGN KEY(tarjeta)
+        REFERENCES tarjetas(tarjeta_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
+      FOREIGN KEY(suscripcion)
+        REFERENCES suscripciones(suscripcion_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+    );
+    DELIMITER //
+
+## STORE PROCEDURE PARA LA LOGICA DE NEGOCIOS
+
+    ## PARAMETROS DE ENTRADA Y SALIDA DEL STORE PROCEDURE
+    CREATE PROCEDURE sp_asignar_servicio(
+      ## Las carácteristicas de las variables deben coicidir con los de tabla
+      IN i_suscripcion INT UNSIGNED,
+      IN i_nombre VARCHAR(30),
+      IN i_correo VARCHAR(50),
+      IN i_tarjeta VARCHAR(16),
+      OUT o_respuesta VARCHAR(50)
+    )
+      ## LOGICA DE NEGOCIO
+      BEGIN
+        ## DECLARACION DE VARIABLES
+
+        DECLARE existe_correo INT DEFAULT 0;
+        DECLARE cliente_id INT DEFAULT 0;
+        DECLARE tarjeta_id INT DEFAULT 0;
+
+        START TRANSACTION;
+
+          SELECT COUNT(*) INTO existe_correo
+            FROM clientes
+            WHERE correo = i_correo;
+
+          IF existe_correo <> 0 THEN
+            SELECT 'Tu correo ya ha sido registrado' INTO  o_respuesta;
+          ELSE
+            INSERT INTO clientes VALUES (0, i_nombre, i_correo);
+            SELECT LAST_INSERT_ID() INTO cliente_id;
+
+
+            INSERT INTO tarjetas
+              VALUES (0, cliente_id, AES_ENCRYPT(i_tarjeta, cliente_id));
+            SELECT LAST_INSERT_ID() INTO tarjeta_id;
+
+            INSERT INTO servicios
+              VALUES (0, cliente_id, tarjeta_id, i_suscripcion);
+
+            SELECT 'Servicio almacenado con éxito' INTO o_respuesta;
+          END IF;
+        COMMIT;
+      END //
+
+    DELIMITER ;
+
+`SHOW PROCEDURE STATUS WHERE db = 'curso_sql';`
+
+![show-store-procedure](./Imagenes/show-store-procedure.png)
+
+EJECUTANDO EL STORE PROCEDURE
+
+    SELECT * FROM suscripciones s;
+    SELECT * FROM clientes;
+    SELECT * FROM tarjetas;
+    SELECT * FROM servicios;
+
+    ## Verificamos los parámetros del Store Procedure
+    ## @rest es la variable de respuesta del sp
+    CALL sp_asignar_servicio(3,'jonvzcas','vzcastillo@aol.com','0123456789012345', @res);
+
+`SELECT @res;`
+
+![resp-sp](./Imagenes/resp-sp.png)
+
+`SELECT * FROM clientes;`
+
+![clientes](./Imagenes/clientes1.png)
+
+`SELECT * FROM tarjetas;`
+
+![tarjetas](./Imagenes/tarjetas1.png)
+
+`SELECT * FROM servicios;`
+
+![servicios](./Imagenes/servicios1.png)
+
+SI VOLVEMOS A EJECUTAR EL STORE PROCEDURE
+
+`SELECT @res;`
+
+![mismos-param-sp](./Imagenes/other-exe-sp.png)
+
+Indica que el correo ya fue registrado
+
+[☝️](#contenido)
+
+---
+
+## DISPARADORES (TRIGGERS)
+
+Ejecuta de forma automatica una acción en respuesta a eventos en la base de datos. Alguna operación que afecte datos (UPDATE, INSERT, DELETE).
+
+SINTAXIS
+
+    DELIMITER //
+
+    CREATE TRIGGER nombre_disparador
+      [BEFORE | AFTER]
+      [INSERT | UPDATE | DELETE]
+      ON nombre_tabla
+      FOR EACH ROW
+    BEGIN
+    END //
+
+    DELIMITER ;
+
+**_Ejemplo 46 :_**
+
+Siguiendo con la lógica de negocios del ejemplo 45 vamos a crear una tabla que haga las veces de log y que inserte un registro automáticamente cuando se ejecute un evento.
+
+    CREATE TABLE actividad_clientes(
+      ac_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+      cliente INT UNSIGNED,
+      fecha DATETIME,
+      FOREIGN KEY (cliente)
+        REFERENCES clientes(cliente_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+    );
+
+La tabla por ahora se encuentra vacia
+
+![act-clientes](./Imagenes/act_clientes.png)
+
+CREANDO EL TRIGGER
+
+    DELIMITER //
+
+    CREATE TRIGGER tg_actividad_clientes
+      AFTER INSERT
+      ON clientes
+      FOR EACH ROW
+    BEGIN
+      ## De esta forma se estaria almacenando el disparador
+      INSERT INTO actividad_clientes VALUES (0, NEW.cliente_id, NOW());
+    END //
+
+    DELIMITER ;
+
+    /*
+    * De donde se obtiene el id del cliente?
+    * A través del objeto NEW obtiene el valor que se inserto y que origino la ejecución del disparador
+    * NOW permite obtener la fecha y la hora actual
+    * */
+
+EJECUTANDO EL TRIGGER
+
+1. Ejecutamos el store procedure para activar el trigger
+
+`CALL sp_asignar_servicio(3,'climaco','climactano@yahoo.com','0123456789012356', @res);`
+`SELECT @res;`
+
+![activando-tg](./Imagenes/reejecut-sp-to-tg.png)
+
+2. Verificando el contenido de las tablas
+
+Tabla clientes
+
+![clientes](./Imagenes/clientes2.png)
+
+Tabla tarjetas
+
+![tarjetas](./Imagenes/tarjetas2.png)
+
+Tabla servicios
+![servicios](./Imagenes/servicios2.png)
+
+VER LOS TRIGGERS EN UNA BASE DE DATOS
+
+`SHOW TRIGGERS FROM curso_sql;`
+
+![mostrar-triggers-en-db](./Imagenes/show-triggers.png)
+
+3. Verificamos que se haya ejecutado el trigger en la tabla actividad_clientes
+
+![trigger-ejecutado](./Imagenes/log-trigger.png)
+
+_El registro se insertó automáticamente al ejecutarse un evento de inserción en la tabla clientes. _
+
+ELIMINAR UN TRIGGER
+
+`DROP TRIGGER tg_actividad_clientes;`
+
+[☝️](#contenido)
+
+---
 
 ## Ruta de mis scripts
 
